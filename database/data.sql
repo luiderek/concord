@@ -29,6 +29,15 @@ VALUES (
   1
 );
 
+INSERT INTO "rooms" (
+  "room_name",
+  "server_id"
+)
+VALUES (
+  'bucket',
+  1
+);
+
 INSERT INTO "messages" (
   "content",
   "user_id",
@@ -49,4 +58,15 @@ VALUES (
   'this is my second message from user-id 1 in room-id 1',
   1,
   1
+);
+
+INSERT INTO "messages" (
+  "content",
+  "user_id",
+  "room_id"
+)
+VALUES (
+  'this is the third message, going into the room-id 2',
+  1,
+  2
 );
