@@ -1,10 +1,11 @@
 import React from 'react';
-import HelloWorld from '../components/hello-world';
+import MessageContainer from '../components/MessageContainer';
 
 export default function Home(props) {
+
   return (
     <div>
-      <HelloWorld />
+      <MessageContainer room={1} />
     </div>
   );
 }

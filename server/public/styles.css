@@ -1,0 +1,28 @@
+* {
+  background-color: #36393f;
+  font-family: "Open Sans", sans-serif;
+}
+
+.message-container {
+  height: 90vh;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.message span {
+  margin-right: 0.5rem;
+  color: var(--bs-gray-100);
+}
+
+.message span:nth-child(1) {
+  color: var(--bs-gray-300);
+  font-size: 80%;
+}
+
+.message span:nth-child(2) {
+  font-weight: bold;
+  font-size: 95%;
+}
