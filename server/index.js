@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const errorMiddleware = require('./error-middleware');
 const db = require('./db');
+const ClientError = require('./client-error');
 
 const app = express();
 const publicPath = path.join(__dirname, 'public');
@@ -27,8 +28,9 @@ app.get('/api/msg', (req, res, next) => {
 
 app.get('/api/msg/:roomID', (req, res, next) => {
   const roomID = Number(req.params.roomID);
-  // some sort of checks for type, existing, etc go here.
-  // make first break later.
+  if (typeof roomID !== 'number' || roomID % 1 !== 0 || roomID < 0) {
+    throw new ClientError(400, 'roomID must be a positive integer');
+  }
   const sql = `
     select "user_id",
            "room_id",
