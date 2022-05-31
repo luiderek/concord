@@ -13,7 +13,6 @@
 }
 
 .message span {
-  /* inline-table is the fix for selecting adjacent spans on double-click */
   display: inline-table;
   margin-right: 0.5rem;
   color: var(--bs-gray-100);
@@ -57,4 +56,13 @@ div.message:hover {
 
 .chat-input::placeholder {
   color: var(--bs-gray-400);
+}
+
+.fa-pencil {
+  color: var(--bs-gray-300);
+}
+
+.fa-trash-can {
+  margin-left: 0.3rem;
+  color: var(--bs-red);
 }
