@@ -1,4 +1,5 @@
 import React from 'react';
+import DeleteConfirmModal from './DeleteConfirmModal';
 
 export default function Message(props) {
   return (
@@ -13,7 +14,7 @@ export default function Message(props) {
         {props.content}
       </span>
       <i className="fa-solid fa-pencil"></i>
-      <i className="fa-solid fa-trash-can"></i>
+      <DeleteConfirmModal />
     </div>
   );
 }

@@ -40,21 +40,7 @@ div.message:hover {
 
 div.message:hover * {
   --pencilColor: grey;
-  --trashColor: red;
-}
-
-.message span:nth-child(1) {
-  color: var(--bs-gray-300);
-  font-size: 80%;
-  grid-column: 1;
-  display: inline-block;
-}
-
-.message span:nth-child(2) {
-  font-weight: bold;
-  font-size: 95%;
-  grid-column: 2;
-  justify-content: center;
+  --trashColor: #d7292c;
 }
 
 .chat-input {
@@ -86,4 +72,86 @@ div.message:hover * {
   margin-left: 0.3rem;
   color: var(--trashColor);
   margin-block: auto;
+}
+
+.modal-content {
+  border: none;
+}
+
+.modal-header,
+.modal-title,
+.modal-body {
+  background-color: #36393f;
+}
+
+.modal-header {
+  color: white;
+  border-bottom: 0;
+}
+
+.modal-body {
+  color: var(--bs-gray-200);
+}
+
+.modal-footer {
+  border-top: 0;
+  background-color: #2f3136;
+}
+
+.btn-primary {
+  background-color: #d83c3e;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  transition: background-color 0.17s ease;
+}
+
+.btn-primary:hover {
+  background-color: #a12d2f;
+}
+
+.btn-link {
+  text-decoration: none;
+  color: var(--bs-gray-200);
+  font-size: 0.8rem;
+}
+
+.btn-link:hover {
+  color: var(--bs-gray-100);
+  text-decoration: underline;
+}
+
+div.fade,
+.modal-dialog-centered {
+  background: none;
+}
+
+.modal-backdrop.show {
+  background: black;
+  opacity: 0.88;
+}
+
+.modal-title > span {
+  font-size: 0.9rem;
+}
+
+.modal-title > h4 {
+  /* font-weight: bold; */
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.message span:nth-child(1) {
+  color: var(--bs-gray-300);
+  font-size: 80%;
+  grid-column: 1;
+  display: inline-block;
+}
+
+.message span:nth-child(2) {
+  font-weight: bold;
+  font-size: 95%;
+  grid-column: 2;
+  justify-content: center;
 }
