@@ -10,7 +10,8 @@ CREATE TABLE users (
 	last_activity        timestamptz(6) DEFAULT now() NOT NULL,
 	hashpass             text  NOT NULL,
 	created_at           timestamptz(6) DEFAULT now() NOT NULL  ,
-	CONSTRAINT pk_users PRIMARY KEY ( user_id )
+	CONSTRAINT pk_users PRIMARY KEY ( user_id ),
+  UNIQUE("username")
  );
 
 CREATE TABLE servers (
