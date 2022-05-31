@@ -16,13 +16,14 @@ app.use(express.static(publicPath));
 
 app.get('/api/msg', (req, res, next) => {
   const sql = `
-    select "users"."user_id",
+     select "users"."user_id",
            "message_id",
            "room_id",
            "content",
            "post_time",
            "username"
-      from "messages", "users"
+      from "messages"
+      join "users" using ("user_id")
   `;
   db.query(sql)
     .then(result => res.json(result.rows))
@@ -35,13 +36,14 @@ app.get('/api/msg/:roomID', (req, res, next) => {
     throw new ClientError(400, 'roomID must be a positive integer');
   }
   const sql = `
-    select "users"."user_id",
+     select "users"."user_id",
            "message_id",
            "room_id",
            "content",
            "post_time",
            "username"
-      from "messages", "users"
+      from "messages"
+      join "users" using ("user_id")
      where "room_id"=$1
   `;
   const params = [roomID];
