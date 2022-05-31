@@ -22,8 +22,7 @@
 
 div.message {
   padding-left: 0.5rem;
-  padding-block: 0.15rem;
-  margin-block: -0.15rem;
+  padding-block: 0.1rem;
   display: grid;
   grid-template-columns: 70px 60px 1fr 20px 25px;
   grid-auto-flow: row dense;
