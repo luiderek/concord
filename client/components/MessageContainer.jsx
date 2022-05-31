@@ -10,7 +10,7 @@ export default function MessageContainer(props) {
           return context.messages.map(msg => (
             <Message key={msg.message_id}
               time={new Date(msg.post_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-              name={`uid:${msg.user_id}`}
+              name={msg.username}
               content={msg.content} />
           ));
         }
