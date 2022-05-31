@@ -13,6 +13,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(express.static(publicPath));
+app.use(express.json());
 
 app.get('/api/msg', (req, res, next) => {
   const sql = `
@@ -49,6 +50,22 @@ app.get('/api/msg/:roomID', (req, res, next) => {
   const params = [roomID];
   db.query(sql, params)
     .then(result => res.json(result.rows))
+    .catch(err => next(err));
+});
+
+app.post('/api/msg/', (req, res, next) => {
+  const { userID, message, room } = req.body;
+  if (!message) { throw new ClientError(400, 'message required field'); }
+  if (!userID) { throw new ClientError(400, 'userID required field'); }
+  if (!room) { throw new ClientError(400, 'room required field'); }
+  const sql = `
+    insert into "messages" ("content", "user_id", "room_id")
+    values ($1, $2, $3)
+    returning *;
+  `;
+  const params = [message, userID, room];
+  db.query(sql, params)
+    .then(data => res.status(201).json(data.rows[0]))
     .catch(err => next(err));
 });
 

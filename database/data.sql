@@ -20,6 +20,16 @@ VALUES (
   'https://cdn.shopify.com/s/files/1/1061/1924/products/Flushed_Emoji_Icon_5e6ce936-4add-472b-96ba-9082998adcf7_large.png?v=1571606089'
 );
 
+INSERT INTO "users" (
+  "username",
+  "hashpass",
+  "avatar"
+)
+VALUES (
+  'friend',
+  'thisisme',
+  'https://cdn.shopify.com/s/files/1/1061/1924/products/Flushed_Emoji_Icon_5e6ce936-4add-472b-96ba-9082998adcf7_large.png?v=1571606089'
+);
 
 INSERT INTO "servers" (
   "serv_name",
@@ -67,22 +77,11 @@ INSERT INTO "messages" (
   "room_id"
 )
 VALUES (
-  'this is my second message from user-id 1 in room-id 1',
-  1,
+  'i do not exist',
+  3,
   1
 );
 
-INSERT INTO "messages" (
-  "content",
-  "user_id",
-  "room_id"
-)
-VALUES (
-  'this is the third message, going into the room-id 2',
-  1,
-  2
-);
-
 
 INSERT INTO "messages" (
   "content",
@@ -90,7 +89,7 @@ INSERT INTO "messages" (
   "room_id"
 )
 VALUES (
-  'you are already banned, i can see through all your proxies, its over',
+  'you are already banned',
   2,
   1
 );

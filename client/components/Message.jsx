@@ -12,6 +12,8 @@ export default function Message(props) {
       <span>
         {props.content}
       </span>
+      <i className="fa-solid fa-pencil"></i>
+      <i className="fa-solid fa-trash-can"></i>
     </div>
   );
 }
