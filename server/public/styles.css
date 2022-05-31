@@ -13,6 +13,8 @@
 }
 
 .message span {
+  /* inline-table is the fix for selecting adjacent spans on double-click */
+  display: inline-table;
   margin-right: 0.5rem;
   color: var(--bs-gray-100);
 }
