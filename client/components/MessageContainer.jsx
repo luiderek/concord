@@ -12,7 +12,8 @@ export default function MessageContainer(props) {
             <Message key={msg.message_id}
               time={new Date(msg.post_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               name={msg.username}
-              content={msg.content} />
+              content={msg.content}
+              msgID={msg.message_id} />
           ));
         }
         }

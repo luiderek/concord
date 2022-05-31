@@ -69,6 +69,22 @@ app.post('/api/msg/', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('/api/msg/:messageID', (req, res, next) => {
+  const messageID = Number(req.params.messageID);
+  if (typeof messageID !== 'number' || messageID % 1 !== 0 || messageID < 0) {
+    throw new ClientError(400, 'messageID must be a positive integer');
+  }
+  const sql = `
+    delete from "messages"
+     where "message_id"=$1
+     returning "message_id", "content";
+  `;
+  const params = [messageID];
+  db.query(sql, params)
+    .then(data => res.status(200).json(data.rows[0]))
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

@@ -24,7 +24,7 @@ export default class App extends React.Component {
     const contextValue = { messages };
     return (
     <AppContext.Provider value={contextValue}>
-      <Home />;
+      <Home />
     </AppContext.Provider>
     );
   }
