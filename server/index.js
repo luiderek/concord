@@ -17,8 +17,10 @@ app.use(express.static(publicPath));
 app.get('/api/msg', (req, res, next) => {
   const sql = `
     select "user_id",
+           "message_id",
            "room_id",
-           "content"
+           "content",
+           "post_time"
       from "messages"
   `;
   db.query(sql)
@@ -33,8 +35,10 @@ app.get('/api/msg/:roomID', (req, res, next) => {
   }
   const sql = `
     select "user_id",
+           "message_id",
            "room_id",
-           "content"
+           "content",
+           "post_time"
       from "messages"
      where "room_id"=$1
   `;

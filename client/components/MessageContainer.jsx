@@ -1,25 +1,23 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Message from './Message';
+import AppContext from '../lib/app-context';
 
 export default function MessageContainer(props) {
-
-  // the equivalent of component on mount
-  useEffect(() => {
-    fetch('/api/msg')
-      .then(response => response.json())
-      .then(data => {
-        for (const message of data) {
-          // eslint-disable-next-line no-console
-          console.log(message);
-        }
-      })
-      .catch(err => console.error(err));
-  }, []);
-
   return (
     <div className='message-container'>
-      <Message time='3:06 PM' name='user1' content='some sort of message content'/>
-      <Message time='3:14 PM' name='user2' content='hi cool i am responding to you'/>
+      <AppContext.Consumer>
+        {context => {
+          return context.messages.map(msg => (
+            <Message key={msg.message_id}
+              time={new Date(msg.post_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              name={`uid:${msg.user_id}`}
+              content={msg.content} />
+          ));
+        }
+        }
+      </AppContext.Consumer>
     </div>
   );
 }
+
+MessageContainer.context = AppContext;
