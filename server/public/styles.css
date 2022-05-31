@@ -22,6 +22,8 @@
 
 div.message {
   padding-left: 0.5rem;
+  padding-block: 0.15rem;
+  margin-block: -0.15rem;
   display: grid;
   grid-template-columns: 70px 60px 1fr 20px 25px;
   grid-auto-flow: row dense;
@@ -92,6 +94,8 @@ div.message:hover * {
 
 .modal-body {
   color: var(--bs-gray-200);
+  padding-top: 0;
+  padding-bottom: 1.3rem;
 }
 
 .modal-footer {
@@ -157,6 +161,7 @@ div.fade,
   justify-self: right;
   color: var(--bs-gray-500);
   font-size: 80%;
+  margin-right: 0.5rem;
 }
 
 .message-card span:nth-child(2) {
@@ -175,7 +180,7 @@ div.fade,
   font-size: 80%;
   grid-column: 1;
   display: inline-block;
-  align-self: center;
+  margin-top: 0.1rem;
 }
 
 .message span:nth-child(2) {
@@ -183,7 +188,6 @@ div.fade,
   font-size: 95%;
   grid-column: 2;
   justify-content: center;
-  align-self: center;
 }
 
 .all-unset {
