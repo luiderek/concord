@@ -23,8 +23,10 @@ export default function DeleteConfirmModal(props) {
 
   return (
     <>
-      <i className="fa-solid fa-trash-can"
-        onClick={handleShow}></i>
+      <button className='all-unset'>
+        <i className="fa-solid fa-trash-can"
+          onClick={handleShow}></i>
+      </button>
 
       <Modal show={show} onHide={handleClose}
             centered>

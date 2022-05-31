@@ -72,6 +72,7 @@ div.message:hover * {
   margin-left: 0.3rem;
   color: var(--trashColor);
   margin-block: auto;
+  cursor: pointer;
 }
 
 .modal-content {
@@ -174,6 +175,7 @@ div.fade,
   font-size: 80%;
   grid-column: 1;
   display: inline-block;
+  align-self: center;
 }
 
 .message span:nth-child(2) {
@@ -181,4 +183,9 @@ div.fade,
   font-size: 95%;
   grid-column: 2;
   justify-content: center;
+  align-self: center;
+}
+
+.all-unset {
+  all: unset;
 }
