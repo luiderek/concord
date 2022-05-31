@@ -14,7 +14,7 @@ export default function Message(props) {
         {props.content}
       </span>
       <i className="fa-solid fa-pencil"></i>
-      <DeleteConfirmModal />
+      <DeleteConfirmModal {...props} />
     </div>
   );
 }
