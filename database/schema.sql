@@ -5,7 +5,7 @@ create schema "public";
 
 CREATE TABLE users (
 	user_id              serial NOT NULL,
-	avatar               text NOT NULL,
+	avatar               text,
 	username             text NOT NULL,
 	last_activity        timestamptz(6) DEFAULT now() NOT NULL,
 	hashpass             text  NOT NULL,

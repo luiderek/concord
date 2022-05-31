@@ -1,34 +1,28 @@
 INSERT INTO "users" (
   "username",
-  "hashpass",
-  "avatar"
+  "hashpass"
 )
 VALUES (
   'derek',
-  'letmein',
-  'https://cdn.shopify.com/s/files/1/1061/1924/products/Flushed_Emoji_Icon_5e6ce936-4add-472b-96ba-9082998adcf7_large.png?v=1571606089'
+  'letmein'
 );
 
 INSERT INTO "users" (
   "username",
-  "hashpass",
-  "avatar"
+  "hashpass"
 )
 VALUES (
   'admin',
-  'password123',
-  'https://cdn.shopify.com/s/files/1/1061/1924/products/Flushed_Emoji_Icon_5e6ce936-4add-472b-96ba-9082998adcf7_large.png?v=1571606089'
+  'password123'
 );
 
 INSERT INTO "users" (
   "username",
-  "hashpass",
-  "avatar"
+  "hashpass"
 )
 VALUES (
   'friend',
-  'thisisme',
-  'https://cdn.shopify.com/s/files/1/1061/1924/products/Flushed_Emoji_Icon_5e6ce936-4add-472b-96ba-9082998adcf7_large.png?v=1571606089'
+  'thisisme'
 );
 
 INSERT INTO "servers" (

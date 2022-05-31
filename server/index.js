@@ -97,8 +97,8 @@ app.post('/api/auth/sign-up', (req, res, next) => {
     .hash(password)
     .then(hashedPassword => {
       const sql = `
-        insert into "users" ("username", "hashpass", "avatar")
-        values ($1, $2, 'notnullplaceholder')
+        insert into "users" ("username", "hashpass")
+        values ($1, $2)
         returning "user_id", "username", "created_at"
       `;
       const params = [username, hashedPassword];
