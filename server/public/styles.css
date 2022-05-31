@@ -192,3 +192,16 @@ div.fade,
 .all-unset {
   all: unset;
 }
+
+.auth-header {
+  color: white;
+  text-align: center;
+  margin-top: 20vh;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10vh;
+  margin-inline: 15vw;
+}
