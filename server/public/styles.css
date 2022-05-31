@@ -17,6 +17,18 @@
   color: var(--bs-gray-100);
 }
 
+div.message {
+  padding-left: 0.5rem;
+}
+
+div.message * {
+  background-color: unset;
+}
+
+div.message:hover {
+  background-color: #2d3035;
+}
+
 .message span:nth-child(1) {
   color: var(--bs-gray-300);
   font-size: 80%;
