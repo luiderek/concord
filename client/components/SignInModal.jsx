@@ -36,7 +36,7 @@ export default function SignInModal(props) {
 
   return (
     <>
-      <Button onClick={handleShow}>
+      <Button className="blue-button" onClick={handleShow}>
         Sign in
       </Button>
 
@@ -45,7 +45,7 @@ export default function SignInModal(props) {
         <Form>
           <Modal.Header>
             <Modal.Title className='mb-2 mt-2'>
-              <h4>Sign Up</h4>
+              <h4>Sign In</h4>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -65,7 +65,10 @@ export default function SignInModal(props) {
             <Button variant="link" onClick={handleClose}>
               Cancel
             </Button>
-            <Button variant="primary" type="submit" onClick={handleSubmit}>
+            <Button className="blue-button"
+            variant="primary"
+            type="submit"
+            onClick={handleSubmit}>
               Submit
             </Button>
           </Modal.Footer>

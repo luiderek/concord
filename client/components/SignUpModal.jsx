@@ -31,6 +31,22 @@ export default function SignUpModal(props) {
       .then(data => {
         if (data.error) {
           console.error('error:', data);
+        } else {
+          fetch('/api/auth/sign-in', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(authobject)
+          }).then(res => res.json())
+            .then(data => {
+              if (data.error) {
+                console.error('error:', data);
+              } else if (data.user && data.token) {
+                props.onSignIn(data);
+              }
+            })
+            .catch(err => console.error(err));
         }
         // console.log('successfully created account', data);
         // location.reload(); // Refresh page. I know its terrible but it's funny.
@@ -40,7 +56,7 @@ export default function SignUpModal(props) {
 
   return (
     <>
-      <Button onClick={handleShow}>
+      <Button className="blue-button" onClick={handleShow}>
         Sign Up
       </Button>
 
@@ -48,7 +64,7 @@ export default function SignUpModal(props) {
         centered>
         <Form>
           <Modal.Header>
-            <Modal.Title className='mb-2 mt-2'>
+            <Modal.Title className='mb-2 mt-2 center-me'>
               <h4>Sign Up</h4>
             </Modal.Title>
           </Modal.Header>
@@ -69,7 +85,10 @@ export default function SignUpModal(props) {
             <Button variant="link" onClick={handleClose}>
               Cancel
             </Button>
-            <Button variant="primary" type="submit" onClick={handleSubmit}>
+            <Button className="blue-button"
+            variant="primary"
+            type="submit"
+            onClick={handleSubmit}>
               Submit
             </Button>
           </Modal.Footer>

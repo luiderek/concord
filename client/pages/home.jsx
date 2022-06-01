@@ -7,13 +7,13 @@ import { Button } from 'react-bootstrap';
 export default class Home extends React.Component {
   render() {
     const { user, handleSignOut } = this.context;
-    if (!this.context.user) return <Redirect to="sign-in" />;
+    if (!this.context.user) return <Redirect to="auth" />;
 
     return (
       <>
         <MessageContainer room={1} />
-        <div className='modal-header mt-2'>
-          <span>you are {user.username}</span>
+        <div className='bottom-bar mt-2'>
+          <span>{user.username}</span>
           <Button onClick={handleSignOut}>sign out</Button>
         </div>
       </>

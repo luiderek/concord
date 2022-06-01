@@ -20,7 +20,7 @@ export default function ChatInput(props) {
     }).then(res => res.json())
       .then(data => {
         e.target.reset(); // Clear form.
-        // location.reload(); // Refresh page. I know its terrible but it's funny.
+        location.reload(); // Refresh page. I know its terrible but it's funny.
       })
       .catch(err => console.error(err));
   };

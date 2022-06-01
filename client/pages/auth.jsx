@@ -17,7 +17,7 @@ export default class Auth extends React.Component {
         <h4 className='auth-header'> This is a full stack webapp using: </h4>
         <h4 className='auth-header'> Express, PostgreSQL, Websockets, React </h4>
         <div className="button-wrapper">
-          <SignUpModal />
+          <SignUpModal onSignIn={handleSignIn} />
           <SignInModal onSignIn={handleSignIn} />
         </div>
       </>

@@ -3,26 +3,8 @@ INSERT INTO "users" (
   "hashpass"
 )
 VALUES (
-  'derek',
-  'letmein'
-);
-
-INSERT INTO "users" (
-  "username",
-  "hashpass"
-)
-VALUES (
   'admin',
   'password123'
-);
-
-INSERT INTO "users" (
-  "username",
-  "hashpass"
-)
-VALUES (
-  'friend',
-  'thisisme'
 );
 
 INSERT INTO "servers" (
@@ -62,28 +44,5 @@ INSERT INTO "messages" (
 VALUES (
   'this is my very first message',
   1,
-  1
-);
-
-INSERT INTO "messages" (
-  "content",
-  "user_id",
-  "room_id"
-)
-VALUES (
-  'i do not exist',
-  3,
-  1
-);
-
-
-INSERT INTO "messages" (
-  "content",
-  "user_id",
-  "room_id"
-)
-VALUES (
-  'you are already banned',
-  2,
   1
 );

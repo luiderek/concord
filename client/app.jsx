@@ -54,7 +54,7 @@ export default class App extends React.Component {
     if (path === '') {
       return <Home />;
     }
-    if (path === 'sign-in' || path === 'sign-up') {
+    if (path === 'auth') {
       return <Auth />;
     }
     return <NotFound />;
