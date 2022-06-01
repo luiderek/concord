@@ -197,6 +197,9 @@ div.fade,
 .auth-header {
   color: white;
   text-align: center;
+}
+
+.auth-header:first-of-type {
   margin-top: 20vh;
 }
 
