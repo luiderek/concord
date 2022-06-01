@@ -63,7 +63,7 @@ export default function SignUpModal(props) {
       <Modal show={show} onHide={handleClose}
         centered>
         <Form>
-          <Modal.Header className='justify-center'>
+          <Modal.Header className='justify-content-center'>
             <Modal.Title className='mb-2 mt-2'>
               <h4>Sign Up</h4>
             </Modal.Title>

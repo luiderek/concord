@@ -218,10 +218,6 @@ div.fade,
   background-color: #4752c4;
 }
 
-.center-me {
-  text-align: center;
-}
-
 .bottom-bar {
   display: flex;
   justify-content: flex-end;
