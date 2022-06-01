@@ -63,8 +63,8 @@ export default function SignUpModal(props) {
       <Modal show={show} onHide={handleClose}
         centered>
         <Form>
-          <Modal.Header>
-            <Modal.Title className='mb-2 mt-2 center-me'>
+          <Modal.Header className='justify-center'>
+            <Modal.Title className='mb-2 mt-2'>
               <h4>Sign Up</h4>
             </Modal.Title>
           </Modal.Header>
@@ -89,7 +89,7 @@ export default function SignUpModal(props) {
             variant="primary"
             type="submit"
             onClick={handleSubmit}>
-              Submit
+              Continue
             </Button>
           </Modal.Footer>
         </Form>
