@@ -1,34 +1,10 @@
 INSERT INTO "users" (
   "username",
-  "hashpass",
-  "avatar"
-)
-VALUES (
-  'derek',
-  'letmein',
-  'https://cdn.shopify.com/s/files/1/1061/1924/products/Flushed_Emoji_Icon_5e6ce936-4add-472b-96ba-9082998adcf7_large.png?v=1571606089'
-);
-
-INSERT INTO "users" (
-  "username",
-  "hashpass",
-  "avatar"
+  "hashpass"
 )
 VALUES (
   'admin',
-  'password123',
-  'https://cdn.shopify.com/s/files/1/1061/1924/products/Flushed_Emoji_Icon_5e6ce936-4add-472b-96ba-9082998adcf7_large.png?v=1571606089'
-);
-
-INSERT INTO "users" (
-  "username",
-  "hashpass",
-  "avatar"
-)
-VALUES (
-  'friend',
-  'thisisme',
-  'https://cdn.shopify.com/s/files/1/1061/1924/products/Flushed_Emoji_Icon_5e6ce936-4add-472b-96ba-9082998adcf7_large.png?v=1571606089'
+  'password123'
 );
 
 INSERT INTO "servers" (
@@ -68,28 +44,5 @@ INSERT INTO "messages" (
 VALUES (
   'this is my very first message',
   1,
-  1
-);
-
-INSERT INTO "messages" (
-  "content",
-  "user_id",
-  "room_id"
-)
-VALUES (
-  'i do not exist',
-  3,
-  1
-);
-
-
-INSERT INTO "messages" (
-  "content",
-  "user_id",
-  "room_id"
-)
-VALUES (
-  'you are already banned',
-  2,
   1
 );

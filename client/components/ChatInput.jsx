@@ -4,6 +4,8 @@ export default function ChatInput(props) {
 
   const postMessage = e => {
     e.preventDefault();
+    // console.log('chatinput props', props);
+    const { user } = props;
     fetch('/api/msg', {
       method: 'POST',
       headers: {
@@ -12,7 +14,7 @@ export default function ChatInput(props) {
       // eventually read from context state current room and userID.
       body: JSON.stringify({
         room: 1,
-        userID: 1,
+        userID: user.userId,
         message: e.target.elements[0].value
       })
     }).then(res => res.json())

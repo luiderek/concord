@@ -13,8 +13,8 @@ export default function Message(props) {
       <span>
         {props.content}
       </span>
-      <i className="fa-solid fa-pencil"></i>
-      <DeleteConfirmModal {...props} />
+      {props.sameUser ? <i className="fa-solid fa-pencil"></i> : '' }
+      {props.sameUser ? <DeleteConfirmModal {...props} /> : '' }
     </div>
   );
 }

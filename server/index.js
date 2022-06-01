@@ -1,9 +1,12 @@
+/* eslint-disable camelcase */
 require('dotenv/config');
 const path = require('path');
 const express = require('express');
 const errorMiddleware = require('./error-middleware');
 const db = require('./db');
 const ClientError = require('./client-error');
+const argon2 = require('argon2');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const publicPath = path.join(__dirname, 'public');
@@ -82,6 +85,62 @@ app.delete('/api/msg/:messageID', (req, res, next) => {
   const params = [messageID];
   db.query(sql, params)
     .then(data => res.status(200).json(data.rows[0]))
+    .catch(err => next(err));
+});
+
+app.post('/api/auth/sign-up', (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    throw new ClientError(400, 'username and password are required fields');
+  }
+  argon2
+    .hash(password)
+    .then(hashedPassword => {
+      const sql = `
+        insert into "users" ("username", "hashpass")
+        values ($1, $2)
+        returning "user_id", "username", "created_at"
+      `;
+      const params = [username, hashedPassword];
+      return db.query(sql, params);
+    })
+    .then(result => {
+      const [user] = result.rows;
+      res.status(201).json(user);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/auth/sign-in', (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    throw new ClientError(401, 'invalid login');
+  }
+  const sql = `
+    select "user_id",
+           "hashpass"
+      from "users"
+     where "username" = $1
+  `;
+  const params = [username];
+  db.query(sql, params)
+    .then(result => {
+      const [user] = result.rows;
+      if (!user) {
+        throw new ClientError(401, 'invalid login');
+      }
+      const { user_id, hashpass } = user;
+      return argon2
+        .verify(hashpass, password)
+        .then(isMatching => {
+          if (!isMatching) {
+            throw new ClientError(401, 'invalid login');
+          }
+          const payload = { userId: user_id, username };
+          const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+          res.json({ token, user: payload });
+        });
+    })
     .catch(err => next(err));
 });
 
