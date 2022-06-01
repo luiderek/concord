@@ -67,7 +67,11 @@ export default class App extends React.Component {
     const contextValue = { user, route, handleSignIn, handleSignOut, messages };
     return (
     <AppContext.Provider value={contextValue}>
-      <PageContainer>{this.renderPage()}</PageContainer>
+      <>
+        <PageContainer>
+          {this.renderPage()}
+        </PageContainer>
+      </>
     </AppContext.Provider>
     );
   }

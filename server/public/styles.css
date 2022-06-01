@@ -89,6 +89,7 @@ div.message:hover * {
 .modal-header {
   color: white;
   border-bottom: 0;
+  display: flex;
 }
 
 .modal-body {
