@@ -16,7 +16,7 @@ export default function DeleteConfirmModal(props) {
       method: 'DELETE'
     }).then(res => res.json())
       .then(data => {
-        location.reload(); // Refresh page. I know its terrible but it's funny.
+        // location.reload(); // Refresh page. I know its terrible but it's funny.
       })
       .catch(err => console.error(err));
   };

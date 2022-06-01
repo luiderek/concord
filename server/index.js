@@ -11,6 +11,13 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const publicPath = path.join(__dirname, 'public');
 
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+io.on('connection', () => {
+  // eslint-disable-next-line no-console
+  console.log('somebody has connected very wow');
+});
+
 if (process.env.NODE_ENV === 'development') {
   app.use(require('./dev-middleware')(publicPath));
 }
@@ -146,6 +153,7 @@ app.post('/api/auth/sign-in', (req, res, next) => {
 
 app.use(errorMiddleware);
 
-app.listen(process.env.PORT, () => {
-  process.stdout.write(`\n\napp listening on port ${process.env.PORT}\n\n`);
+// replaced app.listen with server.listen now that socket.io is here.
+server.listen(process.env.PORT, () => {
+  process.stdout.write(`~~~ Listening on port ${process.env.PORT} ~~~\n`);
 });

@@ -6,6 +6,7 @@ import PageContainer from './components/page-container';
 import jwtDecode from 'jwt-decode';
 import Auth from './pages/auth';
 import NotFound from './pages/not-found';
+import { io } from 'socket.io-client';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -21,6 +22,13 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    const socket = io();
+
+    socket.on('connect', () => {
+      // eslint-disable-next-line no-console
+      console.log('socket.id:', socket.id);
+    });
+
     window.addEventListener('hashchange', () => {
       this.setState({
         route: parseRoute(window.location.hash)
