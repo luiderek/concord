@@ -23,6 +23,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    // console.log(this.state.messages);
     this.socket.on('connect', () => {
       // console.log('i have arrived');
     });

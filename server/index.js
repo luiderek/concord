@@ -122,7 +122,16 @@ app.get('/api/msg/:roomID', (req, res, next) => {
   `;
   const params = [roomID];
   db.query(sql, params)
-    .then(result => res.json(result.rows))
+    .then(result => {
+      // I believe this addresses an issue that causes failures when an
+      // error JSON object is returned, and an array method is called on that.
+      // Basically when you load in, it tries to load messages before the authtoken is finished.
+      if (typeof result.rows === 'object') {
+        res.json([]);
+      } else {
+        res.json(result.rows);
+      }
+    })
     .catch(err => next(err));
 });
 
@@ -138,7 +147,9 @@ app.post('/api/msg/', (req, res, next) => {
   `;
   const params = [message, userID, room];
   db.query(sql, params)
-    .then(data => res.status(201).json(data.rows[0]))
+    .then(data => {
+      res.status(201).json({ ...data.rows[0], username: req.user.username });
+    })
     .catch(err => next(err));
 });
 

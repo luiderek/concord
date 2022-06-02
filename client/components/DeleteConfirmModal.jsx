@@ -13,7 +13,10 @@ export default function DeleteConfirmModal(props) {
     e.preventDefault();
     setShow(false);
     fetch(`/api/msg/${props.msgID}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        'x-access-token': window.localStorage.getItem('react-context-jwt')
+      }
     }).then(res => res.json())
       .then(data => {
         // location.reload(); // Refresh page. I know its terrible but it's funny.

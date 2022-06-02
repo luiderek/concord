@@ -8,14 +8,16 @@ export default function MessageContainer(props) {
     <div className='message-container'>
       <AppContext.Consumer>
         {context => {
-          return context.messages.map(msg => (
-            <Message key={msg.message_id}
-              time={new Date(msg.post_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-              name={msg.username}
-              content={msg.content}
-              msgID={msg.message_id}
-              sameUser={msg.username === context.user.username} />
-          ));
+          if (window.localStorage.getItem('react-context-jwt')) {
+            return context.messages.map(msg => (
+              <Message key={msg.message_id}
+                time={new Date(msg.post_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                name={msg.username}
+                content={msg.content}
+                msgID={msg.message_id}
+                sameUser={msg.username === context.user.username} />
+            ));
+          }
         }
         }
       </AppContext.Consumer>
