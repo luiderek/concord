@@ -2,7 +2,6 @@ import React from 'react';
 import Home from './pages/home';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
-import PageContainer from './components/page-container';
 import jwtDecode from 'jwt-decode';
 import Auth from './pages/auth';
 import NotFound from './pages/not-found';
@@ -15,7 +14,8 @@ export default class App extends React.Component {
       user: null,
       isAuthorizing: true,
       route: parseRoute(window.location.hash),
-      messages: []
+      messages: [],
+      rooms: []
     };
     this.socket = socket;
     this.handleSignIn = this.handleSignIn.bind(this);
@@ -52,6 +52,7 @@ export default class App extends React.Component {
     const user = token ? jwtDecode(token) : null;
     this.setState({ user, isAuthorizing: false });
     this.loadPastMessages(token);
+    this.loadRoomList(1);
   }
 
   loadPastMessages(token) {
@@ -67,6 +68,19 @@ export default class App extends React.Component {
         })
         .catch(err => console.error(err));
     }
+  }
+
+  loadRoomList(serverID) {
+    fetch(`/api/rooms/${serverID}`, {
+      headers: {
+        'x-access-token': window.localStorage.getItem('react-context-jwt')
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ rooms: data });
+      })
+      .catch(err => console.error(err));
   }
 
   handleSignIn(result) {
@@ -95,13 +109,15 @@ export default class App extends React.Component {
 
   render() {
     if (this.state.isAuthorizing) return null;
-    const { user, route, messages } = this.state;
+    const { user, route, messages, rooms } = this.state;
     const { handleSignIn, handleSignOut } = this;
-    const contextValue = { user, route, handleSignIn, handleSignOut, messages };
+    const contextValue = { user, route, handleSignIn, handleSignOut, messages, rooms };
     return (
       <AppContext.Provider value={contextValue}>
         <>
-          <PageContainer>{this.renderPage()}</PageContainer>
+        <div className="layout-container">
+          {this.renderPage()}
+        </div>
         </>
       </AppContext.Provider>
     );
