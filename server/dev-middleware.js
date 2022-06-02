@@ -4,7 +4,7 @@ module.exports = function devMiddleware(publicPath) {
     setTimeout(() => livereload.sendAllClients(JSON.stringify({
       command: 'reload',
       path: '/'
-    })), 100);
+    })), 500);
   });
   livereload.watch(publicPath);
   const webpack = require('webpack')(require('../webpack.config'));

@@ -7,6 +7,8 @@ export default function ChatInput(props) {
     e.preventDefault();
     const { user } = props;
 
+    // Bad SQL returns from an empty context value was breaking the website.
+    // My error handling can use improvement so it breaks things less.
     if (e.target.elements[0].value === '') {
       return;
     }

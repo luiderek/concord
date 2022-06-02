@@ -35,7 +35,9 @@ export default class App extends React.Component {
     });
 
     this.socket.on('message delete', incomingTarget => {
-      const filteredMsgObj = this.state.messages.filter(x => x.message_id !== incomingTarget.message_id);
+      const filteredMsgObj = this.state.messages.filter(
+        x => x.message_id !== incomingTarget.message_id
+      );
       this.setState({ messages: filteredMsgObj });
     });
 
@@ -45,23 +47,28 @@ export default class App extends React.Component {
       });
     });
     const token = window.localStorage.getItem('react-context-jwt');
+    // console.log('the token is:', token);
     const user = token ? jwtDecode(token) : null;
     this.setState({ user, isAuthorizing: false });
 
-    fetch('/api/msg', {
-      headers: {
-        'x-access-token': window.localStorage.getItem('react-context-jwt')
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ messages: data });
+    if (token !== null) {
+      fetch('/api/msg/1', {
+        headers: {
+          'x-access-token': window.localStorage.getItem('react-context-jwt')
+        }
       })
-      .catch(err => console.error(err));
+        .then(response => response.json())
+        .then(data => {
+          this.setState({ messages: data });
+        })
+        .catch(err => console.error(err));
+    }
+
   }
 
   handleSignIn(result) {
     const { user, token } = result;
+    // console.log('the token is:', token);
     window.localStorage.setItem('react-context-jwt', token);
     this.setState({ user });
   }
@@ -88,13 +95,11 @@ export default class App extends React.Component {
     const { handleSignIn, handleSignOut } = this;
     const contextValue = { user, route, handleSignIn, handleSignOut, messages };
     return (
-    <AppContext.Provider value={contextValue}>
-      <>
-        <PageContainer>
-          {this.renderPage()}
-        </PageContainer>
-      </>
-    </AppContext.Provider>
+      <AppContext.Provider value={contextValue}>
+        <>
+          <PageContainer>{this.renderPage()}</PageContainer>
+        </>
+      </AppContext.Provider>
     );
   }
 }

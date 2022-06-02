@@ -7,6 +7,10 @@ function authorizationMiddleware(req, res, next) {
 
   // If no token: throw a 401 error with the message 'authentication required'
   if (!req.headers['x-access-token']) {
+    // Getting about 15 401 'auth required' errors on refreshing a client.
+    // unsure of source of bug.
+    // console.error('req:', Object.keys(req));
+    // console.error('time:', new Date(), 'query:', req.method);
     throw new JsonWebTokenError(401, 'authentication required');
   }
 
