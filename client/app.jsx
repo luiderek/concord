@@ -89,6 +89,7 @@ export default class App extends React.Component {
     this.setState({ user });
     // welp, I guess that's all it took. some sleep and time away. phew.
     this.loadPastMessages(token);
+    this.loadRoomList(1);
   }
 
   handleSignOut() {
@@ -115,7 +116,7 @@ export default class App extends React.Component {
     return (
       <AppContext.Provider value={contextValue}>
         <>
-        <div className="layout-container">
+        <div className={route.path === 'auth' ? 'container' : 'layout-container'}>
           {this.renderPage()}
         </div>
         </>
