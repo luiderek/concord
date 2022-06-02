@@ -1,17 +1,25 @@
 import React from 'react';
+import socket from '../lib/socket-instance';
 
 export default function ChatInput(props) {
 
   const postMessage = e => {
     e.preventDefault();
-    // console.log('chatinput props', props);
     const { user } = props;
+
+    // Bad SQL returns from an empty context value was breaking the website.
+    // My error handling can use improvement so it breaks things less.
+    if (e.target.elements[0].value === '') {
+      return;
+    }
+
     fetch('/api/msg', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-access-token': window.localStorage.getItem('react-context-jwt')
       },
-      // eventually read from context state current room and userID.
+      // eventually read from context state current room.
       body: JSON.stringify({
         room: 1,
         userID: user.userId,
@@ -19,8 +27,8 @@ export default function ChatInput(props) {
       })
     }).then(res => res.json())
       .then(data => {
+        socket.emit('message submit', data);
         e.target.reset(); // Clear form.
-        location.reload(); // Refresh page. I know its terrible but it's funny.
       })
       .catch(err => console.error(err));
   };

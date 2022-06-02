@@ -35,7 +35,8 @@ export default function SignUpModal(props) {
           fetch('/api/auth/sign-in', {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'x-access-token': window.localStorage.getItem('react-context-jwt')
             },
             body: JSON.stringify(authobject)
           }).then(res => res.json())
@@ -72,7 +73,7 @@ export default function SignUpModal(props) {
 
             <Form.Group className="mb-3" controlId="formUser">
               <Form.Label>Username</Form.Label>
-              <Form.Control type="text" />
+              <Form.Control type="text" maxlength="12" />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formPass">

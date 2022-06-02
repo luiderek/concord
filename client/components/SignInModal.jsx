@@ -20,7 +20,8 @@ export default function SignInModal(props) {
     fetch('/api/auth/sign-in', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-access-token': window.localStorage.getItem('react-context-jwt')
       },
       body: JSON.stringify(authobject)
     }).then(res => res.json())
