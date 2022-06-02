@@ -7,7 +7,7 @@
 
 .message-container {
   width: 90%;
-  height: 95vh;
+  height: calc(100% - 1rem);
   margin-inline: auto;
   display: flex;
   flex-direction: column;
@@ -250,7 +250,7 @@ div.fade,
   margin-inline: 0.4rem;
   border-radius: 5px;
   padding-block: 0.2rem;
-  color: var(--bs-gray-200);
+  color: #b9bdc2;
   background-color: #2f3136;
 }
 
@@ -259,10 +259,15 @@ div.fade,
   margin-inline: unset;
   margin-bottom: 1rem;
   font-weight: bold;
+  color: #fff;
+}
+
+.room-sidebar div:first-of-type:hover {
+  background-color: #3c3f45;
 }
 
 .room-sidebar div:hover {
-  color: var(--bs-gray-200);
+  color: var(--bs-gray-100);
   background-color: #3c3f45;
 }
 
@@ -271,4 +276,13 @@ div.fade,
   padding-block: 1rem;
   padding-left: 0.8rem;
   border-bottom: 2px solid #25262a;
+}
+
+.fa-hashtag {
+  font-weight: lighter;
+  margin-right: 0.2rem;
+  -webkit-text-stroke: 1px #2f3136;
+  font-size: 120%;
+  top: 2px;
+  position: relative;
 }

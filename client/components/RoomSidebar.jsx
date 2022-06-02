@@ -5,7 +5,7 @@ import Room from './Room';
 export default function RoomSidebar(props) {
   return (
     <div className='room-sidebar'>
-      <div className="server-name">Server</div>
+      <div className="server-name">Server Name</div>
       <AppContext.Consumer>
         {context => {
           return context.rooms.map(msg => (
@@ -15,7 +15,6 @@ export default function RoomSidebar(props) {
         }
         }
       </AppContext.Consumer>
-        <div>this is the roomsidebar</div>
     </div>
   );
 }
