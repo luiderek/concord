@@ -9,6 +9,7 @@ function authorizationMiddleware(req, res, next) {
   if (!req.headers['x-access-token']) {
     // Getting about 15 401 'auth required' errors on refreshing a client.
     // unsure of source of bug.
+    // the very next day, on reloading VSC, the issue is mostly gone? Very confused.
     // console.error('req:', Object.keys(req));
     // console.error('time:', new Date(), 'query:', req.method);
     throw new JsonWebTokenError(401, 'authentication required');

@@ -46,11 +46,15 @@ export default class App extends React.Component {
         route: parseRoute(window.location.hash)
       });
     });
+
     const token = window.localStorage.getItem('react-context-jwt');
     // console.log('the token is:', token);
     const user = token ? jwtDecode(token) : null;
     this.setState({ user, isAuthorizing: false });
+    this.loadPastMessages(token);
+  }
 
+  loadPastMessages(token) {
     if (token !== null) {
       fetch('/api/msg/1', {
         headers: {
@@ -63,14 +67,14 @@ export default class App extends React.Component {
         })
         .catch(err => console.error(err));
     }
-
   }
 
   handleSignIn(result) {
     const { user, token } = result;
-    // console.log('the token is:', token);
     window.localStorage.setItem('react-context-jwt', token);
     this.setState({ user });
+    // welp, I guess that's all it took. some sleep and time away. phew.
+    this.loadPastMessages(token);
   }
 
   handleSignOut() {
