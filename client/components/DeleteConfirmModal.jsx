@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import MessageCard from './MessageCard';
 import socket from '../lib/socket-instance';
 // This is non optimal but I want things up and running first.
 
@@ -18,7 +17,8 @@ export default function DeleteConfirmModal(props) {
       headers: {
         'x-access-token': window.localStorage.getItem('react-context-jwt')
       }
-    }).then(res => res.json())
+    })
+      .then(res => res.json())
       .then(data => {
         socket.emit('message delete', data);
       })
@@ -27,13 +27,11 @@ export default function DeleteConfirmModal(props) {
 
   return (
     <>
-      <button className='all-unset'>
-        <i className="fa-solid fa-trash-can"
-          onClick={handleShow}></i>
+      <button className="all-unset">
+        <i className="fa-solid fa-trash-can" onClick={handleShow}></i>
       </button>
 
-      <Modal show={show} onHide={handleClose}
-            centered>
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Header>
           <Modal.Title>
             <h4>Delete Message</h4>
@@ -41,7 +39,11 @@ export default function DeleteConfirmModal(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <MessageCard {...props}/>
+          <div className="message-card">
+            <span>{props.time}</span>
+            <span>{props.name}</span>
+            <span>{props.content}</span>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="link" onClick={handleClose}>
