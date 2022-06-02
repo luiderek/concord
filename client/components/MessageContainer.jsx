@@ -21,11 +21,9 @@ export default function MessageContainer(props) {
       </AppContext.Consumer>
       <AppContext.Consumer>
         {context => {
-          // console.log('context:', context);
           return <ChatInput {...context} />;
         }
         }
-      {/* <ChatInput /> */}
       </AppContext.Consumer>
     </div>
   );

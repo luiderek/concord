@@ -6,7 +6,7 @@ import PageContainer from './components/page-container';
 import jwtDecode from 'jwt-decode';
 import Auth from './pages/auth';
 import NotFound from './pages/not-found';
-import { io } from 'socket.io-client';
+import socket from './lib/socket-instance';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,16 +17,21 @@ export default class App extends React.Component {
       route: parseRoute(window.location.hash),
       messages: []
     };
+    this.socket = socket;
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   componentDidMount() {
-    const socket = io();
+    this.socket.on('connect', () => {
+      // console.log('i have arrived');
+    });
 
-    socket.on('connect', () => {
-      // eslint-disable-next-line no-console
-      console.log('socket.id:', socket.id);
+    // when other clients 'message submit', the data is pingponged back here.
+    // the messages object updates, and so it rerenders.
+    this.socket.on('message submit', incomingMsg => {
+      const newMsgObj = [...this.state.messages, incomingMsg];
+      this.setState({ messages: newMsgObj });
     });
 
     window.addEventListener('hashchange', () => {
@@ -38,7 +43,11 @@ export default class App extends React.Component {
     const user = token ? jwtDecode(token) : null;
     this.setState({ user, isAuthorizing: false });
 
-    fetch('/api/msg')
+    fetch('/api/msg', {
+      headers: {
+        'x-access-token': window.localStorage.getItem('react-context-jwt')
+      }
+    })
       .then(response => response.json())
       .then(data => {
         this.setState({ messages: data });
