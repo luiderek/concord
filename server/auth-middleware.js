@@ -7,11 +7,14 @@ function authorizationMiddleware(req, res, next) {
 
   // If no token: throw a 401 error with the message 'authentication required'
   if (!req.headers['x-access-token']) {
-    // Getting about 15 401 'auth required' errors on refreshing a client.
-    // unsure of source of bug.
-    // the very next day, on reloading VSC, the issue is mostly gone? Very confused.
-    // console.error('req:', Object.keys(req));
-    // console.error('time:', new Date(), 'query:', req.method);
+    // Getting about 15 401 'auth required' errors on refreshing a client in firefox.
+    // I still don't know what's causing it, webpack? sockets?
+    // Can't find the issue, so it's a problem for future me.
+    // Only happens on page load, don't see any end-user impacts.
+    console.error('time:', new Date(), 'req keys:', Object.keys(req));
+    console.error('method:', req.method, 'protocol:', req.protocol);
+    console.error('headers:', req.headers);
+    console.error('body:', req.body);
     throw new JsonWebTokenError(401, 'authentication required');
   }
 
