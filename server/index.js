@@ -16,11 +16,12 @@ const io = require('socket.io')(server);
 io.on('connection', socket => {
 
   socket.on('message submit', content => {
-    // console.log('"message submit" event:', content);
     io.emit('message submit', content);
   });
 
-  // console.log('somebody has connected very wow');
+  socket.on('message delete', target => {
+    io.emit('message delete', target);
+  });
 });
 
 if (process.env.NODE_ENV === 'development') {

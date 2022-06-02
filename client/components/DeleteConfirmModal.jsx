@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import MessageCard from './MessageCard';
+import socket from '../lib/socket-instance';
 // This is non optimal but I want things up and running first.
 
 export default function DeleteConfirmModal(props) {
@@ -19,7 +20,7 @@ export default function DeleteConfirmModal(props) {
       }
     }).then(res => res.json())
       .then(data => {
-        // location.reload(); // Refresh page. I know its terrible but it's funny.
+        socket.emit('message delete', data);
       })
       .catch(err => console.error(err));
   };

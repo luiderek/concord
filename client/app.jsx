@@ -23,7 +23,6 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this.state.messages);
     this.socket.on('connect', () => {
       // console.log('i have arrived');
     });
@@ -33,6 +32,11 @@ export default class App extends React.Component {
     this.socket.on('message submit', incomingMsg => {
       const newMsgObj = [...this.state.messages, incomingMsg];
       this.setState({ messages: newMsgObj });
+    });
+
+    this.socket.on('message delete', incomingTarget => {
+      const filteredMsgObj = this.state.messages.filter(x => x.message_id !== incomingTarget.message_id);
+      this.setState({ messages: filteredMsgObj });
     });
 
     window.addEventListener('hashchange', () => {
