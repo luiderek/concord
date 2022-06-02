@@ -164,6 +164,26 @@ app.delete('/api/msg/:messageID', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/rooms/:serverID', (req, res, next) => {
+  const serverID = Number(req.params.serverID);
+  if (typeof serverID !== 'number' || serverID % 1 !== 0 || serverID < 0) {
+    throw new ClientError(400, 'roomID must be a positive integer');
+  }
+  // Anything calling this should be having serverID set to 1.
+  const sql = `
+     select "room_name",
+            "room_id"
+      from  "rooms"
+     where  "server_id"=$1
+  `;
+  const params = [serverID];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 // replaced app.listen with server.listen now that socket.io is here.
