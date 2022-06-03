@@ -106,11 +106,12 @@ export default class App extends React.Component {
 
   renderPage() {
     const { path } = this.state.route;
-    if (path === '') {
-      return <Home />;
-    }
+    const pathValid = true; // Replace this with an actual check later.
     if (path === 'auth') {
       return <Auth />;
+    }
+    if (pathValid) {
+      return <Home path={path}/>;
     }
     return <NotFound />;
   }
