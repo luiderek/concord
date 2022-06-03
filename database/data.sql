@@ -32,7 +32,7 @@ INSERT INTO "rooms" (
   "server_id"
 )
 VALUES (
-  'bucket',
+  'videos',
   1
 );
 
@@ -42,16 +42,7 @@ INSERT INTO "rooms" (
   "server_id"
 )
 VALUES (
-  'games',
-  1
-);
-
-INSERT INTO "rooms" (
-  "room_name",
-  "server_id"
-)
-VALUES (
-  'dog pictures',
+  'memes',
   1
 );
 
@@ -61,7 +52,31 @@ INSERT INTO "messages" (
   "room_id"
 )
 VALUES (
-  'this is my very first message',
+  'general chat is best chat',
   1,
   1
+);
+
+
+INSERT INTO "messages" (
+  "content",
+  "user_id",
+  "room_id"
+)
+VALUES (
+  'only cat videos no dog videos',
+  1,
+  2
+);
+
+
+INSERT INTO "messages" (
+  "content",
+  "user_id",
+  "room_id"
+)
+VALUES (
+  'only text based memes, image upload not supported',
+  1,
+  3
 );

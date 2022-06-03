@@ -13,13 +13,17 @@ export default function CreateRoomModal(props) {
     e.preventDefault();
     setShow(false);
 
+    // Replacing any roomnames with spaces with a hyphen.
+    // Deals with leading/trailing spaces, multiple spaces.
+    const processedRoomName = e.target.form.elements[0].value.trim().split(/\s+/).join('-');
+
     fetch('/api/rooms/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-access-token': window.localStorage.getItem('react-context-jwt')
       },
-      body: JSON.stringify({ roomname: e.target.form.elements[0].value })
+      body: JSON.stringify({ roomname: processedRoomName })
     }).then(res => res.json())
       .then(data => {
         if (data.error) {

@@ -93,22 +93,6 @@ app.post('/api/auth/sign-in', (req, res, next) => {
 
 app.use(authorizationMiddleware);
 
-// app.get('/api/msg', (req, res, next) => {
-//   const sql = `
-//      select "users"."user_id",
-//            "message_id",
-//            "room_id",
-//            "content",
-//            "post_time",
-//            "username"
-//       from "messages"
-//       join "users" using ("user_id")
-//   `;
-//   db.query(sql)
-//     .then(result => res.json(result.rows))
-//     .catch(err => next(err));
-// });
-
 app.get('/api/msg/:roomID', (req, res, next) => {
   const roomID = Number(req.params.roomID);
   if (typeof roomID !== 'number' || roomID % 1 !== 0 || roomID < 0) {
@@ -124,6 +108,7 @@ app.get('/api/msg/:roomID', (req, res, next) => {
       from "messages"
       join "users" using ("user_id")
      where "room_id"=$1
+     order by "post_time" asc;
   `;
   const params = [roomID];
   db.query(sql, params)

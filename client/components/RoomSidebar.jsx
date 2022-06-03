@@ -12,7 +12,8 @@ export default function RoomSidebar(props) {
         {context => {
           return context.rooms.map(msg => (
               <Room key={msg.room_id}
-                name={msg.room_name} />
+                name={msg.room_name}
+                isActive={msg.room_name === context.roomName} />
           ));
         }
         }
