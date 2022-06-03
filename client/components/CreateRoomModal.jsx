@@ -18,12 +18,13 @@ export default function CreateRoomModal(props) {
         'Content-Type': 'application/json',
         'x-access-token': window.localStorage.getItem('react-context-jwt')
       },
-      body: JSON.stringify({ roomname: 'fixednewroom' })
+      body: JSON.stringify({ roomname: e.target.form.elements[0].value })
     }).then(res => res.json())
       .then(data => {
         if (data.error) {
           console.error('error:', data);
         } else {
+          // {room_id: 10, room_name: 'something', server_id: 1}
           // eslint-disable-next-line no-console
           console.log('result from post:', data);
         }
