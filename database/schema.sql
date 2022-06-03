@@ -43,6 +43,7 @@ CREATE  TABLE messages (
 	post_time            timestamptz(6) DEFAULT now() NOT NULL,
 	user_id              integer NOT NULL,
 	room_id              integer NOT NULL,
+	edited               boolean DEFAULT false NOT NULL,
 	CONSTRAINT pk_messages PRIMARY KEY ( message_id )
  );
 
