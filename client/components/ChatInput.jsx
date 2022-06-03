@@ -5,7 +5,7 @@ export default function ChatInput(props) {
 
   const postMessage = e => {
     e.preventDefault();
-    const { user } = props;
+    const { user, roomID } = props;
 
     // Bad SQL returns from an empty context value was breaking the website.
     // My error handling can use improvement so it breaks things less.
@@ -21,7 +21,7 @@ export default function ChatInput(props) {
       },
       // eventually read from context state current room.
       body: JSON.stringify({
-        room: 1,
+        room: roomID,
         userID: user.userId,
         message: e.target.elements[0].value
       })
