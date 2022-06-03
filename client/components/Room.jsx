@@ -10,7 +10,7 @@ export default function Room(props) {
   }
 
   return (
-    <div className='room' onClick={handleRoomClick} key={props.room_id}>
+    <div className={`room ${props.isActive ? 'active-room' : ''}`} onClick={handleRoomClick} key={props.room_id}>
       <i className="fa-solid fa-hashtag"></i> {props.name}
     </div>
   );
