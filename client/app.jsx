@@ -25,10 +25,6 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.socket.on('connect', () => {
-      // console.log('i have arrived');
-    });
-
     this.socket.on('message submit', incomingMsg => {
       // ATM messages will only be appended if the room state matches.
       // But it should be better to handle this from the serverside.
@@ -56,8 +52,7 @@ export default class App extends React.Component {
     this.setState({ user, isAuthorizing: false });
 
     if (token) {
-      this.loadPastMessages(token);
-      this.loadRoomList(1, token);
+      this.loadRoomThenMessages(token);
     }
 
     window.addEventListener('hashchange', () => {
@@ -67,7 +62,7 @@ export default class App extends React.Component {
         this.setState({
           roomID: currentRoom.room_id
         });
-        this.loadPastMessages(window.localStorage.getItem('react-context-jwt'), currentRoom.room_id);
+        this.loadPastMessages(currentRoom.room_id, window.localStorage.getItem('react-context-jwt'));
       }
       // This thing causes a lot of breaks because sometimes rooms is null.
 
@@ -78,9 +73,9 @@ export default class App extends React.Component {
 
   }
 
-  loadPastMessages(token, room) {
-    if (token && room) {
-      fetch(`/api/msg/${room}`, {
+  loadPastMessages(roomID, token) {
+    if (token && roomID) {
+      fetch(`/api/msg/${roomID}`, {
         headers: {
           'x-access-token': token
         }
@@ -94,7 +89,7 @@ export default class App extends React.Component {
   }
 
   loadRoomList(serverID, token) {
-    fetch(`/api/rooms/${serverID}`, {
+    return fetch(`/api/rooms/${serverID}`, {
       headers: {
         'x-access-token': token
       }
@@ -102,17 +97,36 @@ export default class App extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ rooms: data });
+        return data;
       })
       .catch(err => console.error(err));
+  }
+
+  loadRoomThenMessages(token) {
+    if (token) {
+      this.loadRoomList(1, token)
+        .then(rooms => {
+          const hash = window.location.hash.slice(2);
+          const currentRoom = rooms.find(x => x.room_name === hash);
+          if (currentRoom) {
+            this.loadPastMessages(currentRoom.room_id, token);
+          } else {
+            // If the hash is invalid, just redirect and load the first room.
+            const url = new URL(window.location);
+            url.hash = '#/' + rooms[0].room_name;
+            window.location.replace(url);
+            this.loadPastMessages(rooms[0].room_id, token);
+          }
+        })
+        .catch(err => console.error(err));
+    }
   }
 
   handleSignIn(result) {
     const { user, token } = result;
     window.localStorage.setItem('react-context-jwt', token);
     this.setState({ user });
-    // welp, I guess that's all it took. some sleep and time away. phew.
-    this.loadPastMessages(token);
-    this.loadRoomList(1, token);
+    this.loadRoomThenMessages(token);
   }
 
   handleSignOut() {
