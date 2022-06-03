@@ -29,11 +29,13 @@ export default class App extends React.Component {
       // console.log('i have arrived');
     });
 
-    // when other clients 'message submit', the data is pingponged back here.
-    // the messages object updates, and so it rerenders.
     this.socket.on('message submit', incomingMsg => {
-      const newMsgObj = [...this.state.messages, incomingMsg];
-      this.setState({ messages: newMsgObj });
+      // ATM messages will only be appended if the room state matches.
+      // But it should be better to handle this from the serverside.
+      if (incomingMsg.room_id === this.state.roomID) {
+        const newMsgObj = [...this.state.messages, incomingMsg];
+        this.setState({ messages: newMsgObj });
+      }
     });
 
     this.socket.on('message delete', incomingTarget => {
