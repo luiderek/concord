@@ -49,29 +49,37 @@ export default class App extends React.Component {
       this.setState({ rooms: newRooms });
     });
 
+    const token = window.localStorage.getItem('react-context-jwt');
+    const user = token ? jwtDecode(token) : null;
+    this.setState({ user, isAuthorizing: false });
+
+    if (token) {
+      this.loadPastMessages(token);
+      this.loadRoomList(1, token);
+    }
+
     window.addEventListener('hashchange', () => {
       const hash = window.location.hash.slice(2);
       const currentRoom = this.state.rooms.find(x => x.room_name === hash);
+      if (currentRoom) {
+        this.setState({
+          roomID: currentRoom.room_id
+        });
+      }
+      // This thing causes a lot of breaks because sometimes rooms is null.
 
       this.setState({
-        route: parseRoute(window.location.hash),
-        roomID: currentRoom.room_id
+        route: parseRoute(window.location.hash)
       });
     });
 
-    const token = window.localStorage.getItem('react-context-jwt');
-    // console.log('the token is:', token);
-    const user = token ? jwtDecode(token) : null;
-    this.setState({ user, isAuthorizing: false });
-    this.loadPastMessages(token);
-    this.loadRoomList(1);
   }
 
   loadPastMessages(token) {
     if (token !== null) {
       fetch('/api/msg/1', {
         headers: {
-          'x-access-token': window.localStorage.getItem('react-context-jwt')
+          'x-access-token': token
         }
       })
         .then(response => response.json())
@@ -82,10 +90,10 @@ export default class App extends React.Component {
     }
   }
 
-  loadRoomList(serverID) {
+  loadRoomList(serverID, token) {
     fetch(`/api/rooms/${serverID}`, {
       headers: {
-        'x-access-token': window.localStorage.getItem('react-context-jwt')
+        'x-access-token': token
       }
     })
       .then(response => response.json())
@@ -101,12 +109,12 @@ export default class App extends React.Component {
     this.setState({ user });
     // welp, I guess that's all it took. some sleep and time away. phew.
     this.loadPastMessages(token);
-    this.loadRoomList(1);
+    this.loadRoomList(1, token);
   }
 
   handleSignOut() {
     window.localStorage.removeItem('react-context-jwt');
-    this.setState({ user: null });
+    this.setState({ user: null, roomID: null });
   }
 
   renderPage() {

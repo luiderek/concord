@@ -95,7 +95,6 @@ div.message:hover * {
   color: white;
   border-bottom: 0;
   display: flex;
-  border-radius: 20px;
 }
 
 .modal-body {
