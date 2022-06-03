@@ -36,6 +36,25 @@ VALUES (
   1
 );
 
+
+INSERT INTO "rooms" (
+  "room_name",
+  "server_id"
+)
+VALUES (
+  'games',
+  1
+);
+
+INSERT INTO "rooms" (
+  "room_name",
+  "server_id"
+)
+VALUES (
+  'dog pictures',
+  1
+);
+
 INSERT INTO "messages" (
   "content",
   "user_id",

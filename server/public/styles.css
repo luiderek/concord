@@ -6,7 +6,9 @@
 }
 
 .message-container {
-  height: 95vh;
+  width: 90%;
+  height: calc(100% - 1rem);
+  margin-inline: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -219,8 +221,8 @@ div.fade,
 }
 
 .bottom-bar {
-  display: flex;
-  justify-content: flex-end;
+  position: absolute;
+  right: 1rem;
   color: white;
 }
 
@@ -235,4 +237,51 @@ div.fade,
   font-weight: bold;
   font-size: 0.9rem;
   align-self: center;
+}
+
+.room-sidebar {
+  height: 100vh;
+  background-color: #2f3136;
+}
+
+.room-sidebar div {
+  padding-left: 0.4rem;
+  margin-inline: 0.4rem;
+  border-radius: 5px;
+  padding-block: 0.2rem;
+  color: #b9bdc2;
+  background-color: #2f3136;
+}
+
+.room-sidebar div:first-of-type {
+  border-radius: unset;
+  margin-inline: unset;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.room-sidebar div:first-of-type:hover {
+  background-color: #3c3f45;
+}
+
+.room-sidebar div:hover {
+  color: var(--bs-gray-100);
+  background-color: #3c3f45;
+}
+
+.room-sidebar div.server-name {
+  background-color: #2f3136;
+  padding-block: 1rem;
+  padding-left: 0.8rem;
+  border-bottom: 2px solid #25262a;
+}
+
+.fa-hashtag {
+  font-weight: lighter;
+  margin-right: 0.2rem;
+  -webkit-text-stroke: 1px #2f3136;
+  font-size: 120%;
+  top: 2px;
+  position: relative;
 }
