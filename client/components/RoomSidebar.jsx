@@ -6,6 +6,7 @@ export default function RoomSidebar(props) {
   return (
     <div className='room-sidebar'>
       <div className="server-name">Server Name</div>
+      <i className="fa-solid fa-plus"></i>
       <AppContext.Consumer>
         {context => {
           return context.rooms.map(msg => (
