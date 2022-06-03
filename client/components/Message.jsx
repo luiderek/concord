@@ -16,7 +16,7 @@ export default function Message(props) {
           But I'd need to rework the message display grid, so it'll do. */}
         {props.edited === true &&
           <span className='edited-marker'>
-            edited
+            (edited)
           </span>
         }
       </span>
