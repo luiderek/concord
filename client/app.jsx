@@ -65,6 +65,7 @@ export default class App extends React.Component {
         this.setState({
           roomID: currentRoom.room_id
         });
+        this.loadPastMessages(window.localStorage.getItem('react-context-jwt'), currentRoom.room_id);
       }
       // This thing causes a lot of breaks because sometimes rooms is null.
 
@@ -75,9 +76,9 @@ export default class App extends React.Component {
 
   }
 
-  loadPastMessages(token) {
-    if (token !== null) {
-      fetch('/api/msg/1', {
+  loadPastMessages(token, room) {
+    if (token && room) {
+      fetch(`/api/msg/${room}`, {
         headers: {
           'x-access-token': token
         }
