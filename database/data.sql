@@ -32,7 +32,7 @@ INSERT INTO "rooms" (
   "server_id"
 )
 VALUES (
-  'bucket',
+  'videos',
   1
 );
 
@@ -43,15 +43,6 @@ INSERT INTO "rooms" (
 )
 VALUES (
   'games',
-  1
-);
-
-INSERT INTO "rooms" (
-  "room_name",
-  "server_id"
-)
-VALUES (
-  'dog pictures',
   1
 );
 

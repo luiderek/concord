@@ -16,7 +16,8 @@ export default class App extends React.Component {
       isAuthorizing: true,
       route: parseRoute(window.location.hash),
       messages: [],
-      rooms: []
+      rooms: [],
+      roomID: null
     };
     this.socket = socket;
     this.handleSignIn = this.handleSignIn.bind(this);
@@ -49,8 +50,12 @@ export default class App extends React.Component {
     });
 
     window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.slice(2);
+      const currentRoom = this.state.rooms.find(x => x.room_name === hash);
+
       this.setState({
-        route: parseRoute(window.location.hash)
+        route: parseRoute(window.location.hash),
+        roomID: currentRoom.room_id
       });
     });
 
