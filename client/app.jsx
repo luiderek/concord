@@ -17,7 +17,8 @@ export default class App extends React.Component {
       route: parseRoute(window.location.hash),
       messages: [],
       rooms: [],
-      roomID: null
+      roomID: null,
+      roomName: null
     };
     this.socket = socket;
     this.handleSignIn = this.handleSignIn.bind(this);
@@ -60,7 +61,8 @@ export default class App extends React.Component {
       const currentRoom = this.state.rooms.find(x => x.room_name === hash);
       if (currentRoom) {
         this.setState({
-          roomID: currentRoom.room_id
+          roomID: currentRoom.room_id,
+          roomName: currentRoom.room_name
         });
         this.loadPastMessages(currentRoom.room_id, window.localStorage.getItem('react-context-jwt'));
       }
@@ -110,12 +112,14 @@ export default class App extends React.Component {
           const currentRoom = rooms.find(x => x.room_name === hash);
           if (currentRoom) {
             this.loadPastMessages(currentRoom.room_id, token);
+            this.setState({ roomID: currentRoom.room_id, roomName: currentRoom.room_name });
           } else {
             // If the hash is invalid, just redirect and load the first room.
             const url = new URL(window.location);
             url.hash = '#/' + rooms[0].room_name;
             window.location.replace(url);
             this.loadPastMessages(rooms[0].room_id, token);
+            this.setState({ roomID: rooms[0].room_id, roomName: rooms[0].room_name });
           }
         })
         .catch(err => console.error(err));
@@ -148,9 +152,9 @@ export default class App extends React.Component {
 
   render() {
     if (this.state.isAuthorizing) return null;
-    const { user, route, messages, rooms, roomID } = this.state;
+    const { user, route, messages, rooms, roomID, roomName } = this.state;
     const { handleSignIn, handleSignOut } = this;
-    const contextValue = { user, route, handleSignIn, handleSignOut, messages, rooms, roomID };
+    const contextValue = { user, route, handleSignIn, handleSignOut, messages, rooms, roomID, roomName };
     return (
       <AppContext.Provider value={contextValue}>
         <>
