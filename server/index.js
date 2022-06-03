@@ -22,6 +22,10 @@ io.on('connection', socket => {
   socket.on('message delete', target => {
     io.emit('message delete', target);
   });
+
+  socket.on('new room', data => {
+    io.emit('new room', data);
+  });
 });
 
 if (process.env.NODE_ENV === 'development') {

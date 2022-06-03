@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
+import socket from '../lib/socket-instance';
 // This is non optimal but I want things up and running first.
 
 export default function CreateRoomModal(props) {
@@ -25,8 +26,7 @@ export default function CreateRoomModal(props) {
           console.error('error:', data);
         } else {
           // {room_id: 10, room_name: 'something', server_id: 1}
-          // eslint-disable-next-line no-console
-          console.log('result from post:', data);
+          socket.emit('new room', data);
         }
       })
       .catch(err => console.error(err));
