@@ -33,7 +33,8 @@ CREATE  TABLE rooms (
 	room_id              serial NOT NULL,
 	room_name            text DEFAULT 'general' NOT NULL,
 	server_id            integer NOT NULL,
-	CONSTRAINT pk_rooms PRIMARY KEY ( room_id )
+	CONSTRAINT pk_rooms PRIMARY KEY ( room_id ),
+  CONSTRAINT no_dups UNIQUE(room_name, server_id)
  );
 
 CREATE  TABLE messages (

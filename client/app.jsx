@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import Home from './pages/home';
 import AppContext from './lib/app-context';
@@ -39,6 +40,12 @@ export default class App extends React.Component {
         x => x.message_id !== incomingTarget.message_id
       );
       this.setState({ messages: filteredMsgObj });
+    });
+
+    this.socket.on('new room', incomingRoom => {
+      const { room_id, room_name } = incomingRoom;
+      const newRooms = [...this.state.rooms, { room_id, room_name }];
+      this.setState({ rooms: newRooms });
     });
 
     window.addEventListener('hashchange', () => {

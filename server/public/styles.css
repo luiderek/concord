@@ -5,6 +5,10 @@
   font-family: "Open Sans", sans-serif;
 }
 
+form {
+  border-radius: 5px;
+}
+
 .message-container {
   width: 90%;
   height: calc(100% - 1rem);
@@ -91,6 +95,7 @@ div.message:hover * {
   color: white;
   border-bottom: 0;
   display: flex;
+  border-radius: 20px;
 }
 
 .modal-body {
@@ -220,6 +225,11 @@ div.fade,
   background-color: #4752c4;
 }
 
+.blue-button-room {
+  margin-left: 0.6rem;
+  padding: 0.5rem 0.8rem;
+}
+
 .bottom-bar {
   position: absolute;
   right: 1rem;
@@ -281,7 +291,33 @@ div.fade,
   font-weight: lighter;
   margin-right: 0.2rem;
   -webkit-text-stroke: 1px #2f3136;
+  background-color: transparent;
   font-size: 120%;
   top: 2px;
   position: relative;
+}
+
+.fa-plus {
+  color: var(--bs-gray-100);
+  background-color: transparent;
+  position: fixed;
+  left: 218px;
+  top: 78px;
+  padding: 5px;
+}
+
+.fa-plus:hover {
+  background-color: grey;
+  border-radius: 50%;
+}
+
+.dark-input {
+  background-color: #25262a;
+  color: white;
+  border: none;
+}
+
+.dark-input:focus {
+  background-color: #25262a;
+  color: white;
 }
