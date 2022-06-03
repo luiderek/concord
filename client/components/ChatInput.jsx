@@ -37,7 +37,7 @@ export default function ChatInput(props) {
     <form method='post' onSubmit={postMessage}>
       <input
         className='chat-input'
-        placeholder='Message #room'>
+        placeholder={`Message #${window.location.hash.slice(2)}`}>
       </input>
     </form>
   );
