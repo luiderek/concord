@@ -164,6 +164,25 @@ app.delete('/api/msg/:messageID', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// For now, this will create a new room with server_id = 1.
+// ATM roomnames are not unique, which may be a problem in the future.
+// I need to figure out how to make a saner SQL call in the future.
+app.post('/api/rooms/', (req, res, next) => {
+  const { roomname } = req.body;
+  if (!roomname) { throw new ClientError(400, 'roomname required field'); }
+  const sql = `
+    insert into "rooms" ("room_name", "server_id")
+    values ($1, 1)
+    returning *;
+  `;
+  const params = [roomname];
+  db.query(sql, params)
+    .then(data => {
+      res.status(201).json(data.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
 app.get('/api/rooms/:serverID', (req, res, next) => {
   const serverID = Number(req.params.serverID);
   if (typeof serverID !== 'number' || serverID % 1 !== 0 || serverID < 0) {
