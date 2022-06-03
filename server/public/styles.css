@@ -326,3 +326,9 @@ div.active-room {
   background-color: #25262a;
   color: white;
 }
+
+span > span.edited-marker:first-child {
+  font-size: 60%;
+  margin-left: 0.5rem;
+  color: rgb(154, 154, 154);
+}

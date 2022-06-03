@@ -12,7 +12,15 @@ export default function Message(props) {
       </span>
       <span>
         {props.content}
+        {/* The edited-marker needs to be on it's own span for copy-paste.
+          But I'd need to rework the message display grid, so it'll do. */}
+        {props.edited === true &&
+          <span className='edited-marker'>
+            edited
+          </span>
+        }
       </span>
+
       {props.sameUser ? <i className="fa-solid fa-pencil"></i> : '' }
       {props.sameUser ? <DeleteConfirmModal {...props} /> : '' }
     </div>

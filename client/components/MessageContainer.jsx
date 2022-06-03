@@ -14,16 +14,14 @@ export default function MessageContainer(props) {
                 name={msg.username}
                 content={msg.content}
                 msgID={msg.message_id}
+                edited={msg.edited}
                 sameUser={msg.username === context.user.username} />
           ));
         }
         }
       </AppContext.Consumer>
       <AppContext.Consumer>
-        {context => {
-          return <ChatInput {...context} />;
-        }
-        }
+        {context => { return <ChatInput {...context} />; }}
       </AppContext.Consumer>
     </div>
   );

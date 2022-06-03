@@ -104,7 +104,8 @@ app.get('/api/msg/:roomID', (req, res, next) => {
            "room_id",
            "content",
            "post_time",
-           "username"
+           "username",
+           "edited"
       from "messages"
       join "users" using ("user_id")
      where "room_id"=$1
