@@ -35,7 +35,7 @@ export default function Message(props) {
           </span>
         )}
       </div>
-      {props.currentlyEditing === props.msgID && <EditMessageInput />}
+      {props.currentlyEditing === props.msgID && <EditMessageInput {...props} />}
     </>
   );
 }

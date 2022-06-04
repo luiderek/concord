@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 // This is non optimal but I want things up and running first.
 
 export default function EditMessageInput(props) {
 
+  const [formValue, formSetter] = useState(null);
+
+  const handleInputChange = e => {
+    formSetter(e.target.value);
+  };
+
+  const closeEditing = () => {
+    props.setEditing(null);
+  };
+
   const postMessage = e => {
     e.preventDefault();
-
     // Bad SQL returns from an empty context value was breaking the website.
     // My error handling can use improvement so it breaks things less.
 
@@ -35,13 +44,15 @@ export default function EditMessageInput(props) {
         <input
           className='chat-input edit-input'
           placeholder="placeholder"
-          type='text'>
+          type='text'
+          value={`${formValue || props.content}`}
+          onChange={handleInputChange}>
         </input>
       </form>
       <div className='edit-message-guide-text'>
-        <span>escape to <a className='edit-msg-fake-link'>cancel</a></span>
+        <span>escape to <a className='edit-msg-fake-link' onClick={closeEditing}>cancel</a></span>
         <span>●</span>
-        <span>enter to <a className='edit-msg-fake-link'>save</a></span>
+        <span>enter to <a className='edit-msg-fake-link' onClick={postMessage}>save</a></span>
       </div>
     </>
   );
