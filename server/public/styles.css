@@ -22,6 +22,7 @@ form {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 /* Another byproduct of react-scroll-to-bottom, a button I don't want. */
