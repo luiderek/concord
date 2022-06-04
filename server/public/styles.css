@@ -10,7 +10,7 @@ form {
 }
 
 .message-container {
-  width: 95%;
+  width: 100%;
   height: calc(100% - 1rem);
   margin-inline: auto;
   overflow-y: scroll;
@@ -38,7 +38,7 @@ div.message:last-of-type {
 }
 
 div.message {
-  padding-left: 0.5rem;
+  padding-inline: 2.75%;
   padding-block: 0.1rem;
   display: grid;
   grid-template-columns: 70px 60px 1fr 20px 25px;
@@ -67,7 +67,7 @@ div.message:hover * {
 
 .chat-input {
   width: 85%;
-  padding: 0.6rem 4rem;
+  padding: 0.4rem 4rem;
   background-color: #40444b;
   color: var(--bs-gray-200);
   border: none;
