@@ -1,8 +1,10 @@
 import React from 'react';
 import DeleteConfirmModal from './DeleteConfirmModal';
+import EditMessageInput from './EditMessageInput';
 
 export default function Message(props) {
   return (
+    <>
     <div className='message'>
       <span>
         {props.time}
@@ -13,7 +15,8 @@ export default function Message(props) {
       <span>
         {props.content}
         {/* The edited-marker needs to be on it's own span for copy-paste.
-          But I'd need to rework the message display grid, so it'll do. */}
+          Turns out, user-select:none also prevents span bleed.
+          Might be a useful trick in the future for this stuff. */}
         {props.edited === true &&
           <span className='edited-marker'>
             (edited)
@@ -24,5 +27,7 @@ export default function Message(props) {
       {props.sameUser ? <i className="fa-solid fa-pencil"></i> : '' }
       {props.sameUser ? <DeleteConfirmModal {...props} /> : '' }
     </div>
+    { true === false && <EditMessageInput /> }
+    </>
   );
 }
