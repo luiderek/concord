@@ -15,8 +15,16 @@ form {
   margin-inline: auto;
   overflow-y: scroll;
   margin-top: auto;
+}
+
+/* Weird little workaround needed for a quirk of react-scroll-to-bottom */
+.message-container > div {
   display: flex;
   flex-direction: column;
+}
+
+.auto-scroller {
+  height: 100vh;
 }
 
 .message span {
