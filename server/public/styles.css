@@ -13,7 +13,7 @@ form {
   width: 100%;
   height: calc(100% - 1rem);
   margin-inline: auto;
-  overflow-y: scroll;
+  overflow-y: hidden;
   margin-top: auto;
 }
 
@@ -89,7 +89,7 @@ div.message:hover * {
 }
 
 .chat-input::placeholder {
-  color: var(--bs-gray-400);
+  color: var(--bs-gray-600);
 }
 
 .fa-pencil {
