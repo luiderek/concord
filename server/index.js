@@ -19,6 +19,10 @@ io.on('connection', socket => {
     io.emit('message submit', content);
   });
 
+  socket.on('message edit', content => {
+    io.emit('message edit', content);
+  });
+
   socket.on('message delete', target => {
     io.emit('message delete', target);
   });
@@ -149,11 +153,13 @@ app.patch('/api/msg/:messageID', (req, res, next) => {
      update "messages"
      set "content"=$2, "edited"=true
      where "message_id"=$1
-     returning "messages".*;
+     returning *;
   `;
   const params = [messageID, content];
   db.query(sql, params)
-    .then(data => res.status(204).json(data.rows[0]))
+    .then(data => {
+      res.status(200).send({ ...data.rows[0], username: req.user.username });
+    })
     .catch(err => next(err));
 });
 

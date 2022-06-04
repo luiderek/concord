@@ -35,6 +35,15 @@ export default class App extends React.Component {
       }
     });
 
+    this.socket.on('message edit', editMsg => {
+      if (editMsg.room_id === this.state.roomID) {
+        const index = this.state.messages.findIndex(x => x.message_id === editMsg.message_id);
+        const newMsgObj = [...this.state.messages];
+        newMsgObj[index] = editMsg;
+        this.setState({ messages: newMsgObj });
+      }
+    });
+
     this.socket.on('message delete', incomingTarget => {
       const filteredMsgObj = this.state.messages.filter(
         x => x.message_id !== incomingTarget.message_id
