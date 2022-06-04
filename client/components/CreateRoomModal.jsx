@@ -38,7 +38,9 @@ export default function CreateRoomModal(props) {
 
   return (
     <>
-      <i className="fa-solid fa-plus" onClick={handleShow}></i>
+      <div style={{ position: 'relative', width: 0, height: 0 }}>
+        <i className="fa-solid fa-plus" onClick={handleShow}></i>
+      </div>
 
       <Modal show={show} onHide={handleClose}
         centered>

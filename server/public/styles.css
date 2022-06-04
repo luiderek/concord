@@ -21,6 +21,12 @@ form {
 .message-container > div {
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Another byproduct of react-scroll-to-bottom, a button I don't want. */
+.message-container > button {
+  display: none;
 }
 
 .auto-scroller {
@@ -259,11 +265,13 @@ div.fade,
   grid-row: 2;
   width: 100%;
   height: 100%;
-  background-color: #26282c;
+  background-color: #292b2f;
   color: white;
   display: flex;
   justify-content: space-between;
   padding-inline: 1rem;
+  border-top: 1px solid #3b3e45;
+  user-select: none;
 }
 
 .user-sign-out button {
@@ -283,6 +291,8 @@ div.fade,
 .room-sidebar {
   height: calc(100vh - 50px);
   background-color: #2f3136;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .room-sidebar div {
@@ -299,13 +309,8 @@ div.fade,
 .room-sidebar div:first-of-type {
   border-radius: unset;
   margin-inline: unset;
-  margin-bottom: 0.8rem;
   font-weight: bold;
   color: #fff;
-}
-
-.room-sidebar div:first-of-type:hover {
-  background-color: #3c3f45;
 }
 
 .room-sidebar div:hover {
@@ -320,7 +325,7 @@ div.active-room {
 
 .room-sidebar div.server-name {
   background-color: #2f3136;
-  padding-block: 1rem;
+  padding-block: 0.75rem;
   padding-left: 0.8rem;
   border-bottom: 2px solid #25262a;
 }
@@ -338,10 +343,11 @@ div.active-room {
 .fa-plus {
   color: var(--bs-gray-100);
   background-color: transparent;
-  position: fixed;
-  left: 218px;
-  top: 78px;
+  position: absolute;
+  left: 208px;
+  top: 13px;
   padding: 5px;
+  cursor: pointer;
 }
 
 .fa-plus:hover {
