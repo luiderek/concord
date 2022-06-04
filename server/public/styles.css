@@ -301,7 +301,7 @@ div.fade,
 }
 
 .room-sidebar {
-  height: calc(100vh - 50px);
+  height: 100%;
   background-color: #2f3136;
   overflow-y: auto;
   overflow-x: hidden;
