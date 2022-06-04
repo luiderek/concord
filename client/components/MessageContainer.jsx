@@ -1,6 +1,5 @@
 import React from 'react';
 import Message from './Message';
-import ChatInput from './ChatInput';
 import AppContext from '../lib/app-context';
 
 export default function MessageContainer(props) {
@@ -19,9 +18,6 @@ export default function MessageContainer(props) {
           ));
         }
         }
-      </AppContext.Consumer>
-      <AppContext.Consumer>
-        {context => { return <ChatInput {...context} />; }}
       </AppContext.Consumer>
     </div>
   );

@@ -10,12 +10,13 @@ form {
 }
 
 .message-container {
-  width: 90%;
+  width: 95%;
   height: calc(100% - 1rem);
   margin-inline: auto;
+  overflow-y: scroll;
+  margin-top: auto;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
 }
 
 .message span {
@@ -23,6 +24,17 @@ form {
   margin-right: 0.5rem;
   color: var(--bs-gray-100);
   grid-column: 3;
+}
+
+/* I was having problems with flex justify breaking the scrollbar if the
+   content was larger than the container, so this is my workaround. */
+
+div.message:first-of-type {
+  margin-top: auto;
+}
+
+div.message:last-of-type {
+  margin-bottom: 0.2rem;
 }
 
 div.message {
@@ -49,14 +61,19 @@ div.message:hover * {
   --trashColor: #d7292c;
 }
 
+.layout-container > form:nth-child(3) {
+  grid-column: 2;
+}
+
 .chat-input {
-  width: 100%;
-  margin-top: 1.2rem;
+  width: 85%;
   padding: 0.6rem 4rem;
   background-color: #40444b;
   color: var(--bs-gray-200);
   border: none;
   border-radius: 8px;
+  margin-left: 2.75%;
+  margin-top: 0.2rem;
 }
 
 .chat-input:focus {
@@ -229,27 +246,34 @@ div.fade,
   padding: 0.5rem 0.8rem;
 }
 
-.bottom-bar {
-  position: absolute;
-  right: 1rem;
+.user-sign-out {
+  grid-column: 1;
+  grid-row: 2;
+  width: 100%;
+  height: 100%;
+  background-color: #26282c;
   color: white;
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 1rem;
 }
 
-.bottom-bar button {
-  margin-top: 0.2rem;
-  margin-left: 0.7rem;
+.user-sign-out button {
   background-color: #40444b;
-  padding: 0.2rem 0.5rem;
-}
-
-.bottom-bar span {
-  font-weight: bold;
-  font-size: 0.9rem;
+  padding: 0.4rem 0.5rem;
+  height: fit-content;
   align-self: center;
 }
 
+.user-sign-out span {
+  font-weight: bold;
+  font-size: 0.9rem;
+  align-self: center;
+  background-color: unset;
+}
+
 .room-sidebar {
-  height: 100vh;
+  height: calc(100vh - 50px);
   background-color: #2f3136;
 }
 

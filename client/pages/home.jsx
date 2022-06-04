@@ -4,6 +4,7 @@ import AppContext from '../lib/app-context';
 import Redirect from '../components/redirect';
 import { Button } from 'react-bootstrap';
 import RoomSidebar from '../components/RoomSidebar';
+import ChatInput from '../components/ChatInput';
 
 export default class Home extends React.Component {
   render() {
@@ -14,7 +15,8 @@ export default class Home extends React.Component {
       <>
         <RoomSidebar />
         <MessageContainer room={1} />
-        <div className='bottom-bar mt-2'>
+        <ChatInput {...this.context} />
+        <div className='user-sign-out'>
           <span>{user.username}</span>
           <Button onClick={handleSignOut}>sign out</Button>
         </div>
