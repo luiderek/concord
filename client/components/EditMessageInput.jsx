@@ -3,7 +3,7 @@ import socket from '../lib/socket-instance';
 
 export default function EditMessageInput(props) {
 
-  const [formValue, formSetter] = useState(null);
+  const [formValue, formSetter] = useState(props.content);
 
   const handleInputChange = e => {
     formSetter(e.target.value);
@@ -37,9 +37,8 @@ export default function EditMessageInput(props) {
       <form method='post' onSubmit={postMessage}>
         <input
           className='chat-input edit-input'
-          placeholder="placeholder"
           type='text'
-          value={`${formValue || props.content}`}
+          value={`${formValue}`}
           onChange={handleInputChange}>
         </input>
       </form>
