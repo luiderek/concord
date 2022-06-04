@@ -74,7 +74,7 @@ div.message * {
 }
 
 div.message:hover {
-  background-color: #2d3035;
+  background-color: #32353b;
 }
 
 div.message:hover * {
@@ -388,12 +388,18 @@ span > span.edited-marker:first-child {
 
 .edit-message-guide-text {
   color: var(--bs-gray-500);
-  margin-left: 80px;
+  padding-left: 80px;
   font-size: 85%;
+  background-color: #32353b;
 }
 
 .edit-message-guide-text span {
   margin-right: 0.2rem;
+  background-color: #32353b;
+}
+
+.edit-message-guide-text a {
+  background-color: #32353b;
 }
 
 .edit-msg-fake-link {
@@ -412,4 +418,10 @@ span > span.edited-marker:first-child {
   padding-inline: 1rem;
   margin-left: 80px;
   width: 70%;
+}
+
+.edit-highlight,
+.edit-highlight + form {
+  background-color: #32353b;
+  border-radius: 0;
 }

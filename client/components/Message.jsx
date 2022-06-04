@@ -7,13 +7,15 @@ export default function Message(props) {
     props.setEditing(props.msgID);
   }
 
+  const isEditedMsg = props.currentlyEditing === props.msgID;
+
   return (
     <>
-      <div className="message">
+      <div className={`message ${isEditedMsg ? 'edit-highlight' : ''}`}>
         <span>
           <span>{props.time}</span>
           <span>{props.name}</span>
-          {props.currentlyEditing !== props.msgID && (
+          {!isEditedMsg && (
             <span>
               {props.content}
               {/* The edited-marker needs to be on it's own span for copy-paste.
@@ -25,7 +27,7 @@ export default function Message(props) {
             </span>
           )}
         </span>
-        {props.sameUser && props.currentlyEditing !== props.msgID && (
+        {props.sameUser && !isEditedMsg && (
           <span className="icon-wrapper">
             <i
               className="fa-solid fa-pencil"
@@ -35,7 +37,7 @@ export default function Message(props) {
           </span>
         )}
       </div>
-      {props.currentlyEditing === props.msgID && <EditMessageInput {...props} />}
+      {isEditedMsg && <EditMessageInput {...props} />}
     </>
   );
 }
