@@ -138,6 +138,25 @@ app.post('/api/msg/', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.patch('/api/msg/:messageID', (req, res, next) => {
+  const messageID = Number(req.params.messageID);
+  const { content } = req.body;
+  if (typeof messageID !== 'number' || messageID % 1 !== 0 || messageID < 0) {
+    throw new ClientError(400, 'messageID must be a positive integer');
+  }
+  if (!content) { throw new ClientError(400, 'content required field'); }
+  const sql = `
+     update "messages"
+     set "content"=$2, "edited"=true
+     where "message_id"=$1
+     returning "messages".*;
+  `;
+  const params = [messageID, content];
+  db.query(sql, params)
+    .then(data => res.status(204).json(data.rows[0]))
+    .catch(err => next(err));
+});
+
 app.delete('/api/msg/:messageID', (req, res, next) => {
   const messageID = Number(req.params.messageID);
   if (typeof messageID !== 'number' || messageID % 1 !== 0 || messageID < 0) {
