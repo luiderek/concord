@@ -218,6 +218,22 @@ app.get('/api/rooms/:serverID', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/servers/', (req, res, next) => {
+  const { serverName } = req.body;
+  if (!serverName) { throw new ClientError(400, 'serverName required field'); }
+  const sql = `
+    insert into "servers" ("serv_name", "serv_pic", "creator")
+    values ($1, 'no pic', 1)
+    returning *;
+  `;
+  const params = [serverName];
+  db.query(sql, params)
+    .then(data => {
+      res.status(201).json(data.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 // replaced app.listen with server.listen now that socket.io is here.
