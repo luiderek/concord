@@ -2,11 +2,12 @@ import React from 'react';
 import AppContext from '../lib/app-context';
 import Room from './Room';
 import CreateRoomModal from './CreateRoomModal';
+import ChangeServerModal from './ChangeServerModal';
 
 export default function RoomSidebar(props) {
   return (
     <div className='room-sidebar'>
-      <div className="server-name">Server Name</div>
+      <ChangeServerModal serverName={props.serverName} />
       <CreateRoomModal/>
       <AppContext.Consumer>
         {context => {

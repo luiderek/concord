@@ -29,6 +29,8 @@ export default class App extends React.Component {
     this.socket.on('message submit', incomingMsg => {
       // ATM messages will only be appended if the room state matches.
       // But it should be better to handle this from the serverside.
+      // I think serverside should broadcast to servers,
+      // Clientside should filter it by rooms.
       if (incomingMsg.room_id === this.state.roomID) {
         const newMsgObj = [...this.state.messages, incomingMsg];
         this.setState({ messages: newMsgObj });
@@ -62,11 +64,15 @@ export default class App extends React.Component {
     this.setState({ user, isAuthorizing: false });
 
     if (token) {
-      this.loadRoomThenMessages(token);
+      this.loadRoomThenMessages(token, 1);
     }
 
     window.addEventListener('hashchange', () => {
-      const hash = window.location.hash.slice(2);
+      // const server = window.location.hash.slice(2).split('/')[0];
+      const hash = window.location.hash.slice(2).split('/')[1];
+
+      // console.log('hashchange event:', 's', server, 'h', hash);
+
       const currentRoom = this.state.rooms.find(x => x.room_name === hash);
       if (currentRoom) {
         this.setState({
@@ -113,19 +119,24 @@ export default class App extends React.Component {
       .catch(err => console.error(err));
   }
 
-  loadRoomThenMessages(token) {
+  loadRoomThenMessages(token, serverID) {
     if (token) {
-      this.loadRoomList(1, token)
+      this.loadRoomList(serverID, token)
         .then(rooms => {
-          const hash = window.location.hash.slice(2);
+          // const server = window.location.hash.slice(2).split('/')[0];
+          const hash = window.location.hash.slice(2).split('/')[1];
+          // console.log('server:', server);
+          // console.log('hash:', hash);
           const currentRoom = rooms.find(x => x.room_name === hash);
           if (currentRoom) {
             this.loadPastMessages(currentRoom.room_id, token);
             this.setState({ roomID: currentRoom.room_id, roomName: currentRoom.room_name });
           } else {
             // If the hash is invalid, just redirect and load the first room.
+            // This would have to be reworked to also split the hash by "/"
+            // and only checking the second component for roomname
             const url = new URL(window.location);
-            url.hash = '#/' + rooms[0].room_name;
+            url.hash = '#/' + 'default/' + rooms[0].room_name;
             window.location.replace(url);
             this.loadPastMessages(rooms[0].room_id, token);
             this.setState({ roomID: rooms[0].room_id, roomName: rooms[0].room_name });
@@ -139,7 +150,7 @@ export default class App extends React.Component {
     const { user, token } = result;
     window.localStorage.setItem('react-context-jwt', token);
     this.setState({ user });
-    this.loadRoomThenMessages(token);
+    this.loadRoomThenMessages(token, 1);
   }
 
   handleSignOut() {
