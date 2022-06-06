@@ -13,8 +13,32 @@ INSERT INTO "servers" (
   "creator"
 )
 VALUES (
-  'server one',
-  'no picture lol',
+  'default',
+  'no pic',
+  1
+);
+
+
+INSERT INTO "servers" (
+  "serv_name",
+  "serv_pic",
+  "creator"
+)
+VALUES (
+  'suspicious-server',
+  'no pic',
+  1
+);
+
+
+INSERT INTO "servers" (
+  "serv_name",
+  "serv_pic",
+  "creator"
+)
+VALUES (
+  'fun-server',
+  'no pic',
   1
 );
 
@@ -44,6 +68,25 @@ INSERT INTO "rooms" (
 VALUES (
   'memes',
   1
+);
+
+
+INSERT INTO "rooms" (
+  "room_name",
+  "server_id"
+)
+VALUES (
+  'general',
+  2
+);
+
+INSERT INTO "rooms" (
+  "room_name",
+  "server_id"
+)
+VALUES (
+  'general',
+  3
 );
 
 INSERT INTO "messages" (
