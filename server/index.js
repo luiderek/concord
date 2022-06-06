@@ -218,6 +218,18 @@ app.get('/api/rooms/:serverID', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/servers/', (req, res, next) => {
+  const sql = `
+     select "server_id", "serv_name"
+     from "servers"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.post('/api/servers/', (req, res, next) => {
   const { serverName } = req.body;
   if (!serverName) { throw new ClientError(400, 'serverName required field'); }
