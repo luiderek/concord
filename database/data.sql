@@ -49,12 +49,14 @@ VALUES (
 INSERT INTO "messages" (
   "content",
   "user_id",
-  "room_id"
+  "room_id",
+  "edited"
 )
 VALUES (
   'general chat is best chat',
   1,
-  1
+  1,
+  true
 );
 
 

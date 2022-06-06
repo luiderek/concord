@@ -19,6 +19,10 @@ io.on('connection', socket => {
     io.emit('message submit', content);
   });
 
+  socket.on('message edit', content => {
+    io.emit('message edit', content);
+  });
+
   socket.on('message delete', target => {
     io.emit('message delete', target);
   });
@@ -104,7 +108,8 @@ app.get('/api/msg/:roomID', (req, res, next) => {
            "room_id",
            "content",
            "post_time",
-           "username"
+           "username",
+           "edited"
       from "messages"
       join "users" using ("user_id")
      where "room_id"=$1
@@ -133,6 +138,27 @@ app.post('/api/msg/', (req, res, next) => {
   db.query(sql, params)
     .then(data => {
       res.status(201).json({ ...data.rows[0], username: req.user.username });
+    })
+    .catch(err => next(err));
+});
+
+app.patch('/api/msg/:messageID', (req, res, next) => {
+  const messageID = Number(req.params.messageID);
+  const { content } = req.body;
+  if (typeof messageID !== 'number' || messageID % 1 !== 0 || messageID < 0) {
+    throw new ClientError(400, 'messageID must be a positive integer');
+  }
+  if (!content) { throw new ClientError(400, 'content required field'); }
+  const sql = `
+     update "messages"
+     set "content"=$2, "edited"=true
+     where "message_id"=$1
+     returning *;
+  `;
+  const params = [messageID, content];
+  db.query(sql, params)
+    .then(data => {
+      res.status(200).send({ ...data.rows[0], username: req.user.username });
     })
     .catch(err => next(err));
 });

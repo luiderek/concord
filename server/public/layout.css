@@ -1,4 +1,54 @@
 .layout-container {
   display: grid;
   grid-template-columns: 250px 1fr;
+  grid-template-rows: 1fr 50px;
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+div#root {
+  height: 100%;
+}
+
+/* ===== Scrollbar CSS ===== */
+
+/* Firefox */
+* {
+  /* scrollbar-width: auto; */
+  scrollbar-color: #202225 #2e3338;
+}
+
+/* Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #202225;
+  border: 0 none #fff;
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2e3338;
+  border: 0 none #fff;
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
