@@ -9,9 +9,16 @@ export default function ChangeServerModal(props) {
   const [selected, setSelected] = useState([]);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true);
+    updateServerList();
+  };
 
   useEffect(() => {
+    updateServerList();
+  }, []);
+
+  const updateServerList = () => {
     fetch('/api/servers/', {
       headers: {
         'x-access-token': window.localStorage.getItem('react-context-jwt')
@@ -26,7 +33,7 @@ export default function ChangeServerModal(props) {
         }
       })
       .catch(err => console.error(err));
-  }, []);
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
