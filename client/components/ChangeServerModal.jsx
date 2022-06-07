@@ -1,32 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 export default function ChangeServerModal(props) {
   const [show, setShow] = useState(false);
+  const [serverList, setServerList] = useState([]);
+  const [selected, setSelected] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    setShow(false);
-
-    const processedServerName = e.target.form.elements[0].value.trim().split(/\s+/).join('-');
-
+  useEffect(() => {
     fetch('/api/servers/', {
-      method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         'x-access-token': window.localStorage.getItem('react-context-jwt')
-      },
-      body: JSON.stringify({ serverName: processedServerName })
+      }
     }).then(res => res.json())
       .then(data => {
         if (data.error) {
           console.error('error:', data);
+        } else {
+          // data = []{serv_name: , server_id:}
+          setServerList(data);
         }
       })
       .catch(err => console.error(err));
+  }, []);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    setShow(false);
+    // console.log('submitting form event with selected server:', selected[0]);
+
+    // Create Server Fetch Request. ATM I will focus on interacting with existing ones.
+    // const processedServerName = e.target.form.elements[0].value.trim().split(/\s+/).join('-');
+    // fetch('/api/servers/', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'x-access-token': window.localStorage.getItem('react-context-jwt')
+    //   },
+    //   body: JSON.stringify({ serverName: processedServerName })
+    // }).then(res => res.json())
+    //   .then(data => {
+    //     if (data.error) {
+    //       console.error('error:', data);
+    //     }
+    //   })
+    //   .catch(err => console.error(err));
   };
 
   return (
@@ -47,7 +69,16 @@ export default function ChangeServerModal(props) {
 
             <Form.Group className="mb-3" controlId="formRoom">
               <Form.Label>Server Name</Form.Label>
-              <Form.Control className='dark-input' type="text" />
+              <Typeahead
+                id="server-selector"
+                className='dark-input'
+                labelKey="serv_name"
+                onChange={setSelected}
+                options={serverList}
+                placeholder="Select a server: "
+                selected={selected}
+              />
+              {/* <Form.Control className='dark-input' type="text" /> */}
             </Form.Group>
 
           </Modal.Body>
