@@ -7,7 +7,13 @@ import ChangeServerModal from './ChangeServerModal';
 export default function RoomSidebar(props) {
   return (
     <div className='room-sidebar'>
-      <ChangeServerModal serverName={props.serverName} />
+      <AppContext.Consumer>
+        {
+          context => {
+            return <ChangeServerModal serverName={props.serverName} handleServerChange={context.handleServerChange} />;
+          }
+        }
+      </AppContext.Consumer>
       <CreateRoomModal/>
       <AppContext.Consumer>
         {context => {

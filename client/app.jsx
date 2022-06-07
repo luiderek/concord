@@ -18,11 +18,14 @@ export default class App extends React.Component {
       messages: [],
       rooms: [],
       roomID: null,
-      roomName: null
+      roomName: null,
+      serverID: null,
+      serverName: null
     };
     this.socket = socket;
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
+    this.handleServerChange = this.handleServerChange.bind(this);
   }
 
   componentDidMount() {
@@ -158,6 +161,10 @@ export default class App extends React.Component {
     this.setState({ user: null, roomID: null });
   }
 
+  handleServerChange(name, id) {
+    this.setState({ serverID: id, serverName: name });
+  }
+
   renderPage() {
     const { path } = this.state.route;
     const pathValid = true; // Replace this with an actual check later.
@@ -172,9 +179,10 @@ export default class App extends React.Component {
 
   render() {
     if (this.state.isAuthorizing) return null;
-    const { user, route, messages, rooms, roomID, roomName } = this.state;
-    const { handleSignIn, handleSignOut } = this;
-    const contextValue = { user, route, handleSignIn, handleSignOut, messages, rooms, roomID, roomName };
+    const { user, route, messages, rooms, roomID, roomName, serverID, serverName } = this.state;
+    const { handleSignIn, handleSignOut, handleServerChange } = this;
+    const contextValue = { user, route, handleSignIn, handleSignOut, messages, rooms, roomID, roomName, serverID, serverName, handleServerChange };
+    // This looks like a code smell. Need to ask / figure out how to properly refactor.
     return (
       <AppContext.Provider value={contextValue}>
         <>

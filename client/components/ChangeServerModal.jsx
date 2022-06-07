@@ -32,6 +32,8 @@ export default function ChangeServerModal(props) {
     e.preventDefault();
     setShow(false);
     // console.log('submitting form event with selected server:', selected[0]);
+    const [id, name] = [selected[0].server_id, selected[0].serv_name];
+    props.handleServerChange(name, id);
 
     // Create Server Fetch Request. ATM I will focus on interacting with existing ones.
     // const processedServerName = e.target.form.elements[0].value.trim().split(/\s+/).join('-');
