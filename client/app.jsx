@@ -123,25 +123,24 @@ export default class App extends React.Component {
     if (token) {
       this.loadRoomList(serverID, token)
         .then(rooms => {
-          // const server = window.location.hash.slice(2).split('/')[0];
+          const server = window.location.hash.slice(2).split('/')[0];
           const hash = window.location.hash.slice(2).split('/')[1];
-          // console.log('server:', server);
-          // console.log('hash:', hash);
           const currentRoom = rooms.find(x => x.room_name === hash);
           if (currentRoom) {
             this.loadPastMessages(currentRoom.room_id, token);
             this.setState({ roomID: currentRoom.room_id, roomName: currentRoom.room_name });
+          } else if (server !== this.state.serverName) {
+            const url = new URL(window.location);
+            url.hash = `#/${this.state.serverName}/` + rooms[0].room_name;
+            window.location.replace(url);
           } else {
             // If the hash is invalid, just redirect and load the first room.
-            // This would have to be reworked to also split the hash by "/"
-            // and only checking the second component for roomname
             this.loadPastMessages(rooms[0].room_id, token);
             this.setState({ roomID: rooms[0].room_id, roomName: rooms[0].room_name });
+            const url = new URL(window.location);
+            url.hash = `#/${this.state.serverName}/` + rooms[0].room_name;
+            window.location.replace(url);
           }
-          // I wanted the hash update to happen regardless, instead of only on errors.
-          const url = new URL(window.location);
-          url.hash = `#/${this.state.serverName}/` + rooms[0].room_name;
-          window.location.replace(url);
         })
         .catch(err => console.error(err));
     }
