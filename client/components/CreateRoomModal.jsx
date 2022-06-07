@@ -23,7 +23,11 @@ export default function CreateRoomModal(props) {
         'Content-Type': 'application/json',
         'x-access-token': window.localStorage.getItem('react-context-jwt')
       },
-      body: JSON.stringify({ roomname: processedRoomName })
+      body: JSON.stringify(
+        {
+          roomname: processedRoomName,
+          id: props.serverID
+        })
     }).then(res => res.json())
       .then(data => {
         if (data.error) {
