@@ -31,11 +31,14 @@ export default function ChangeServerModal(props) {
   const handleSubmit = e => {
     e.preventDefault();
     setShow(false);
-    // console.log('submitting form event with selected server:', selected[0]);
     const [id, name] = [selected[0].server_id, selected[0].serv_name];
     props.handleServerChange(name, id);
 
-    // Create Server Fetch Request. ATM I will focus on interacting with existing ones.
+    // Ideally I might need a different typeover/input component,
+    // where if the name doesn't line up with an existing,
+    // it will create the room, and then switch into it afterwards.
+
+    // Create Server Fetch Request.
     // const processedServerName = e.target.form.elements[0].value.trim().split(/\s+/).join('-');
     // fetch('/api/servers/', {
     //   method: 'POST',
@@ -80,7 +83,6 @@ export default function ChangeServerModal(props) {
                 placeholder="Select a server: "
                 selected={null}
               />
-              {/* <Form.Control className='dark-input' type="text" /> */}
             </Form.Group>
 
           </Modal.Body>
