@@ -230,15 +230,23 @@ app.get('/api/servers/', (req, res, next) => {
 app.post('/api/servers/', (req, res, next) => {
   const { serverName } = req.body;
   if (!serverName) { throw new ClientError(400, 'serverName required field'); }
-  const sql = `
+  const serverInsertSQL = `
     insert into "servers" ("serv_name", "serv_pic", "creator")
     values ($1, 'no pic', 1)
     returning *;
   `;
-  const params = [serverName];
-  db.query(sql, params)
+  const firstRoomSQL = `
+    insert into "rooms" ("room_name", "server_id")
+    values( 'general', $1);
+  `;
+  let params = [serverName];
+  // After successfully creating the server, insert the room 'general'.
+  db.query(serverInsertSQL, params)
     .then(data => {
       res.status(201).json(data.rows[0]);
+      params = [data.rows[0].server_id];
+      db.query(firstRoomSQL, params)
+        .catch(err => next(err));
     })
     .catch(err => next(err));
 });
