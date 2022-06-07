@@ -183,14 +183,15 @@ app.delete('/api/msg/:messageID', (req, res, next) => {
 // ATM roomnames are not unique, which may be a problem in the future.
 // I need to figure out how to make a saner SQL call in the future.
 app.post('/api/rooms/', (req, res, next) => {
-  const { roomname } = req.body;
+  const { roomname, id } = req.body;
   if (!roomname) { throw new ClientError(400, 'roomname required field'); }
+  if (!id) { throw new ClientError(400, 'id required field'); }
   const sql = `
     insert into "rooms" ("room_name", "server_id")
-    values ($1, 1)
+    values ($1, $2)
     returning *;
   `;
-  const params = [roomname];
+  const params = [roomname, id];
   db.query(sql, params)
     .then(data => {
       res.status(201).json(data.rows[0]);
