@@ -5,7 +5,7 @@ export default function Room(props) {
   function handleRoomClick(e) {
     const url = new URL(window.location);
     // Hardcoding servername for now.
-    url.hash = '/default/' + props.name;
+    url.hash = `/${props.serverName}/` + props.name;
     window.location.replace(url);
     return null;
   }

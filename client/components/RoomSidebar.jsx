@@ -14,12 +14,19 @@ export default function RoomSidebar(props) {
           }
         }
       </AppContext.Consumer>
-      <CreateRoomModal/>
+      <AppContext.Consumer>
+        {
+          context => {
+            return <CreateRoomModal serverID={context.serverID} />;
+          }
+        }
+      </AppContext.Consumer>
       <AppContext.Consumer>
         {context => {
           return context.rooms.map(msg => (
               <Room key={msg.room_id}
                 name={msg.room_name}
+                serverName={context.serverName}
                 isActive={msg.room_name === context.roomName} />
           ));
         }
