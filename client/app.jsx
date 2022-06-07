@@ -67,11 +67,21 @@ export default class App extends React.Component {
     this.setState({ user, isAuthorizing: false });
 
     if (token) {
-      this.loadRoomThenMessages(token, 1);
+      this.loadServerList(token)
+        .then(response => {
+          const server = window.location.hash.slice(2).split('/')[0];
+          const currentServer = response.find(x => x.serv_name === server);
+          if (currentServer) {
+            this.setState({ serverID: currentServer.server_id, serverName: currentServer.serv_name });
+            this.loadRoomThenMessages(token, currentServer.server_id, currentServer.serv_name);
+          } else {
+            this.loadRoomThenMessages(token, 1, 'default');
+          }
+        })
+        .catch(err => console.error(err));
     }
 
     window.addEventListener('hashchange', () => {
-      // const server = window.location.hash.slice(2).split('/')[0];
       const hash = window.location.hash.slice(2).split('/')[1];
 
       const currentRoom = this.state.rooms.find(x => x.room_name === hash);
@@ -118,51 +128,79 @@ export default class App extends React.Component {
       .catch(err => console.error(err));
   }
 
+  loadServerList(token) {
+    return fetch('/api/servers/', {
+      headers: {
+        'x-access-token': token
+      }
+    }
+    )
+      .then(response => response.json())
+      .then(data => {
+        return data;
+      })
+      .catch(err => console.error(err));
+  }
+
   // Load all the rooms and messages from a specific server.
-  loadRoomThenMessages(token, serverID) {
+  loadRoomThenMessages(token, serverID, serverName) {
     if (token) {
       this.loadRoomList(serverID, token)
         .then(rooms => {
-          const server = window.location.hash.slice(2).split('/')[0];
           const hash = window.location.hash.slice(2).split('/')[1];
           const currentRoom = rooms.find(x => x.room_name === hash);
           if (currentRoom) {
             this.loadPastMessages(currentRoom.room_id, token);
             this.setState({ roomID: currentRoom.room_id, roomName: currentRoom.room_name });
-          } else if (server !== this.state.serverName) {
-            const url = new URL(window.location);
-            url.hash = `#/${this.state.serverName}/` + rooms[0].room_name;
-            window.location.replace(url);
+            this.updateHashRoute(serverName, currentRoom.room_name);
           } else {
-            // If the hash is invalid, just redirect and load the first room.
+            // If the hash is invalid, just redirect to and load the first room.
             this.loadPastMessages(rooms[0].room_id, token);
             this.setState({ roomID: rooms[0].room_id, roomName: rooms[0].room_name });
-            const url = new URL(window.location);
-            url.hash = `#/${this.state.serverName}/` + rooms[0].room_name;
-            window.location.replace(url);
+            this.updateHashRoute(serverName, rooms[0].room_name);
           }
         })
         .catch(err => console.error(err));
     }
   }
 
+  // Perhaps sign-in needs to be going to a "which room" modal at the start?"
   handleSignIn(result) {
     const { user, token } = result;
     window.localStorage.setItem('react-context-jwt', token);
+    if (token) {
+      this.loadServerList(token)
+        .then(response => {
+          const server = window.location.hash.slice(2).split('/')[0];
+          const currentServer = response.find(x => x.serv_name === server);
+          if (currentServer) {
+            this.setState({ serverID: currentServer.server_id, serverName: currentServer.serv_name });
+            this.loadRoomThenMessages(token, currentServer.server_id, currentServer.serv_name);
+          } else {
+            this.loadRoomThenMessages(token, 1, 'default');
+          }
+        })
+        .catch(err => console.error(err));
+    }
     this.setState({ user });
-    this.loadRoomThenMessages(token, 1);
   }
 
   handleSignOut() {
     window.localStorage.removeItem('react-context-jwt');
-    this.setState({ user: null, roomID: null });
+    this.setState({ user: null, roomID: null, serverName: 'default', serverID: 1 });
   }
 
   handleServerChange(name, id) {
     this.setState({ serverID: id, serverName: name });
     const token = window.localStorage.getItem('react-context-jwt');
-    this.loadRoomThenMessages(token, id);
+    this.loadRoomThenMessages(token, id, name);
 
+  }
+
+  updateHashRoute(serverName, roomName) {
+    const url = new URL(window.location);
+    url.hash = `#/${serverName}/` + roomName;
+    window.location.replace(url);
   }
 
   renderPage() {
