@@ -179,18 +179,16 @@ app.delete('/api/msg/:messageID', (req, res, next) => {
     .catch(err => next(err));
 });
 
-// For now, this will create a new room with server_id = 1.
-// ATM roomnames are not unique, which may be a problem in the future.
-// I need to figure out how to make a saner SQL call in the future.
 app.post('/api/rooms/', (req, res, next) => {
-  const { roomname } = req.body;
+  const { roomname, id } = req.body;
   if (!roomname) { throw new ClientError(400, 'roomname required field'); }
+  if (!id) { throw new ClientError(400, 'id required field'); }
   const sql = `
     insert into "rooms" ("room_name", "server_id")
-    values ($1, 1)
+    values ($1, $2)
     returning *;
   `;
-  const params = [roomname];
+  const params = [roomname, id];
   db.query(sql, params)
     .then(data => {
       res.status(201).json(data.rows[0]);
@@ -203,7 +201,6 @@ app.get('/api/rooms/:serverID', (req, res, next) => {
   if (typeof serverID !== 'number' || serverID % 1 !== 0 || serverID < 0) {
     throw new ClientError(400, 'roomID must be a positive integer');
   }
-  // Anything calling this should be having serverID set to 1.
   const sql = `
      select "room_name",
             "room_id"
@@ -214,6 +211,42 @@ app.get('/api/rooms/:serverID', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/servers/', (req, res, next) => {
+  const sql = `
+     select "server_id", "serv_name"
+     from "servers"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/servers/', (req, res, next) => {
+  const { serverName } = req.body;
+  if (!serverName) { throw new ClientError(400, 'serverName required field'); }
+  const serverInsertSQL = `
+    insert into "servers" ("serv_name", "serv_pic", "creator")
+    values ($1, 'no pic', 1)
+    returning *;
+  `;
+  const firstRoomSQL = `
+    insert into "rooms" ("room_name", "server_id")
+    values( 'general', $1);
+  `;
+  let params = [serverName];
+  // After successfully creating the server, insert the room 'general'.
+  db.query(serverInsertSQL, params)
+    .then(data => {
+      res.status(201).json(data.rows[0]);
+      params = [data.rows[0].server_id];
+      db.query(firstRoomSQL, params)
+        .catch(err => next(err));
     })
     .catch(err => next(err));
 });

@@ -13,8 +13,30 @@ INSERT INTO "servers" (
   "creator"
 )
 VALUES (
-  'server one',
-  'no picture lol',
+  'default',
+  'no pic',
+  1
+);
+
+INSERT INTO "servers" (
+  "serv_name",
+  "serv_pic",
+  "creator"
+)
+VALUES (
+  'suspicious-server',
+  'no pic',
+  1
+);
+
+INSERT INTO "servers" (
+  "serv_name",
+  "serv_pic",
+  "creator"
+)
+VALUES (
+  'fun-server',
+  'no pic',
   1
 );
 
@@ -36,7 +58,6 @@ VALUES (
   1
 );
 
-
 INSERT INTO "rooms" (
   "room_name",
   "server_id"
@@ -46,6 +67,24 @@ VALUES (
   1
 );
 
+INSERT INTO "rooms" (
+  "room_name",
+  "server_id"
+)
+VALUES (
+  'general',
+  2
+);
+
+INSERT INTO "rooms" (
+  "room_name",
+  "server_id"
+)
+VALUES (
+  'general',
+  3
+);
+
 INSERT INTO "messages" (
   "content",
   "user_id",
@@ -53,12 +92,11 @@ INSERT INTO "messages" (
   "edited"
 )
 VALUES (
-  'general chat is best chat',
+  'default #general',
   1,
   1,
   true
 );
-
 
 INSERT INTO "messages" (
   "content",
@@ -71,7 +109,6 @@ VALUES (
   2
 );
 
-
 INSERT INTO "messages" (
   "content",
   "user_id",
@@ -81,4 +118,26 @@ VALUES (
   'only text based memes, image upload not supported',
   1,
   3
+);
+
+INSERT INTO "messages" (
+  "content",
+  "user_id",
+  "room_id"
+)
+VALUES (
+  'suspicious-server #general',
+  1,
+  4
+);
+
+INSERT INTO "messages" (
+  "content",
+  "user_id",
+  "room_id"
+)
+VALUES (
+  'fun-server #general',
+  1,
+  5
 );

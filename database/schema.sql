@@ -19,7 +19,8 @@ CREATE TABLE servers (
 	serv_name            text NOT NULL,
 	serv_pic             text NOT NULL,
 	creator              integer  NOT NULL,
-	CONSTRAINT pk_servers PRIMARY KEY ( server_id )
+	CONSTRAINT pk_servers PRIMARY KEY ( server_id ),
+  UNIQUE("serv_name")
  );
 
 CREATE  TABLE membership (

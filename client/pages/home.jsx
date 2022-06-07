@@ -13,7 +13,7 @@ export default class Home extends React.Component {
 
     return (
       <>
-        <RoomSidebar />
+        <RoomSidebar serverName="default"/>
         <MessageContainer room={1} />
         <ChatInput {...this.context} />
         <div className='user-sign-out'>

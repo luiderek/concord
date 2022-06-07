@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import socket from '../lib/socket-instance';
-// This is non optimal but I want things up and running first.
 
 export default function CreateRoomModal(props) {
   const [show, setShow] = useState(false);
@@ -23,7 +22,11 @@ export default function CreateRoomModal(props) {
         'Content-Type': 'application/json',
         'x-access-token': window.localStorage.getItem('react-context-jwt')
       },
-      body: JSON.stringify({ roomname: processedRoomName })
+      body: JSON.stringify(
+        {
+          roomname: processedRoomName,
+          id: props.serverID
+        })
     }).then(res => res.json())
       .then(data => {
         if (data.error) {
