@@ -56,7 +56,7 @@ export default function ChangeServerModal(props) {
   return (
     <>
       <div className="server-name" onClick={handleShow}>
-        {props.serverName}
+        {props.serverName.split('-').join(' ')}
       </div>
 
       <Modal show={show} onHide={handleClose}
@@ -78,7 +78,7 @@ export default function ChangeServerModal(props) {
                 onChange={setSelected}
                 options={serverList}
                 placeholder="Select a server: "
-                selected={selected}
+                selected={null}
               />
               {/* <Form.Control className='dark-input' type="text" /> */}
             </Form.Group>

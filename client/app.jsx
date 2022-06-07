@@ -19,8 +19,8 @@ export default class App extends React.Component {
       rooms: [],
       roomID: null,
       roomName: null,
-      serverID: null,
-      serverName: null
+      serverID: 1,
+      serverName: 'default'
     };
     this.socket = socket;
     this.handleSignIn = this.handleSignIn.bind(this);
@@ -74,8 +74,6 @@ export default class App extends React.Component {
       // const server = window.location.hash.slice(2).split('/')[0];
       const hash = window.location.hash.slice(2).split('/')[1];
 
-      // console.log('hashchange event:', 's', server, 'h', hash);
-
       const currentRoom = this.state.rooms.find(x => x.room_name === hash);
       if (currentRoom) {
         this.setState({
@@ -84,8 +82,6 @@ export default class App extends React.Component {
         });
         this.loadPastMessages(currentRoom.room_id, window.localStorage.getItem('react-context-jwt'));
       }
-      // This thing causes a lot of breaks because sometimes rooms is null.
-
       this.setState({
         route: parseRoute(window.location.hash)
       });
@@ -122,6 +118,7 @@ export default class App extends React.Component {
       .catch(err => console.error(err));
   }
 
+  // Load all the rooms and messages from a specific server.
   loadRoomThenMessages(token, serverID) {
     if (token) {
       this.loadRoomList(serverID, token)
@@ -138,12 +135,13 @@ export default class App extends React.Component {
             // If the hash is invalid, just redirect and load the first room.
             // This would have to be reworked to also split the hash by "/"
             // and only checking the second component for roomname
-            const url = new URL(window.location);
-            url.hash = '#/' + 'default/' + rooms[0].room_name;
-            window.location.replace(url);
             this.loadPastMessages(rooms[0].room_id, token);
             this.setState({ roomID: rooms[0].room_id, roomName: rooms[0].room_name });
           }
+          // I wanted the hash update to happen regardless, instead of only on errors.
+          const url = new URL(window.location);
+          url.hash = `#/${this.state.serverName}/` + rooms[0].room_name;
+          window.location.replace(url);
         })
         .catch(err => console.error(err));
     }
@@ -163,6 +161,9 @@ export default class App extends React.Component {
 
   handleServerChange(name, id) {
     this.setState({ serverID: id, serverName: name });
+    const token = window.localStorage.getItem('react-context-jwt');
+    this.loadRoomThenMessages(token, id);
+
   }
 
   renderPage() {

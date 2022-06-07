@@ -10,7 +10,7 @@ export default function RoomSidebar(props) {
       <AppContext.Consumer>
         {
           context => {
-            return <ChangeServerModal serverName={props.serverName} handleServerChange={context.handleServerChange} />;
+            return <ChangeServerModal serverName={context.serverName} handleServerChange={context.handleServerChange} />;
           }
         }
       </AppContext.Consumer>
