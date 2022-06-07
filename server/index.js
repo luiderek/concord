@@ -179,9 +179,6 @@ app.delete('/api/msg/:messageID', (req, res, next) => {
     .catch(err => next(err));
 });
 
-// For now, this will create a new room with server_id = 1.
-// ATM roomnames are not unique, which may be a problem in the future.
-// I need to figure out how to make a saner SQL call in the future.
 app.post('/api/rooms/', (req, res, next) => {
   const { roomname, id } = req.body;
   if (!roomname) { throw new ClientError(400, 'roomname required field'); }
@@ -204,7 +201,6 @@ app.get('/api/rooms/:serverID', (req, res, next) => {
   if (typeof serverID !== 'number' || serverID % 1 !== 0 || serverID < 0) {
     throw new ClientError(400, 'roomID must be a positive integer');
   }
-  // Anything calling this should be having serverID set to 1.
   const sql = `
      select "room_name",
             "room_id"

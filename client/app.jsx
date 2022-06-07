@@ -165,6 +165,8 @@ export default class App extends React.Component {
   }
 
   // Perhaps sign-in needs to be going to a "which room" modal at the start?"
+  // ATM it just tries to throw you into 'default, 1'.
+  // This code might need some trimming / reworking.
   handleSignIn(result) {
     const { user, token } = result;
     window.localStorage.setItem('react-context-jwt', token);
