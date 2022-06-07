@@ -31,29 +31,29 @@ export default function ChangeServerModal(props) {
   const handleSubmit = e => {
     e.preventDefault();
     setShow(false);
-    const [id, name] = [selected[0].server_id, selected[0].serv_name];
-    props.handleServerChange(name, id);
 
-    // Ideally I might need a different typeover/input component,
-    // where if the name doesn't line up with an existing,
-    // it will create the room, and then switch into it afterwards.
-
-    // Create Server Fetch Request.
-    // const processedServerName = e.target.form.elements[0].value.trim().split(/\s+/).join('-');
-    // fetch('/api/servers/', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'x-access-token': window.localStorage.getItem('react-context-jwt')
-    //   },
-    //   body: JSON.stringify({ serverName: processedServerName })
-    // }).then(res => res.json())
-    //   .then(data => {
-    //     if (data.error) {
-    //       console.error('error:', data);
-    //     }
-    //   })
-    //   .catch(err => console.error(err));
+    if (selected.length !== 0) {
+      const [id, name] = [selected[0].server_id, selected[0].serv_name];
+      props.handleServerChange(name, id);
+    } else {
+      const processedServerName = e.target.form.elements[0].value.trim().split(/\s+/).join('-');
+      fetch('/api/servers/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': window.localStorage.getItem('react-context-jwt')
+        },
+        body: JSON.stringify({ serverName: processedServerName })
+      }).then(res => res.json())
+        .then(data => {
+          if (data.error) {
+            console.error('error:', data);
+          } else {
+            props.handleServerChange(data.serv_name, data.server_id);
+          }
+        })
+        .catch(err => console.error(err));
+    }
   };
 
   return (
@@ -67,7 +67,7 @@ export default function ChangeServerModal(props) {
         <Form>
           <Modal.Header className='justify-content-center'>
             <Modal.Title className='mb-2 mt-2'>
-              <h4>Join Server</h4>
+              <h4>Change Server</h4>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -94,7 +94,7 @@ export default function ChangeServerModal(props) {
             variant="primary"
             type="submit"
             onClick={handleSubmit}>
-              Join Server
+              {selected.length === 0 ? 'Create Server' : 'Join Server'}
             </Button>
           </Modal.Footer>
         </Form>
