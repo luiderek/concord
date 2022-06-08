@@ -368,10 +368,23 @@ div.active-room {
   border-radius: 50%;
 }
 
-.dark-input {
+.dark-input,
+.rbt-input,
+.rbt-input-main {
   background-color: #25262a;
   color: white;
   border: none;
+}
+
+.form-control:focus,
+.form-control:active,
+.dropdown-item {
+  background-color: #25262a;
+  color: white;
+}
+
+.dropdown-menu {
+  --bs-dropdown-bg: #25262a;
 }
 
 .dark-input:focus {
