@@ -89,8 +89,8 @@ export default class App extends React.Component {
       this.setState({ messages: filteredMsgObj });
     });
 
-    this.socket.on('new room', incomingRoom => {
-      if (incomingRoom.room_id === this.state.roomID) {
+    this.socket.on('create room', incomingRoom => {
+      if (incomingRoom.server_id === this.state.serverID) {
         const { room_id, room_name } = incomingRoom;
         const newRooms = [...this.state.rooms, { room_id, room_name }];
         this.setState({ rooms: newRooms });
