@@ -40,6 +40,14 @@ export default class App extends React.Component {
       }
     });
 
+    this.socket.on('rtt open', data => {
+      if (data.room_id === this.state.roomID) {
+        const newMsgObj = [...this.state.messages, data];
+        this.setState({ messages: newMsgObj });
+      }
+      // console.log('rtt open data:', data);
+    });
+
     this.socket.on('message edit', editMsg => {
       if (editMsg.room_id === this.state.roomID) {
         const index = this.state.messages.findIndex(
@@ -51,9 +59,29 @@ export default class App extends React.Component {
       }
     });
 
+    this.socket.on('rtt update', data => {
+      // console.log('rtt update data', data);
+      if (data.room_id === this.state.roomID) {
+        const index = this.state.messages.findIndex(
+          x => x.message_id === data.message_id
+        );
+        const newMsgObj = [...this.state.messages];
+        newMsgObj[index] = data;
+        this.setState({ messages: newMsgObj });
+      }
+    });
+
     this.socket.on('message delete', incomingTarget => {
       const filteredMsgObj = this.state.messages.filter(
         x => x.message_id !== incomingTarget.message_id
+      );
+      this.setState({ messages: filteredMsgObj });
+    });
+
+    this.socket.on('rtt close', data => {
+      // console.log('rtt close', data);
+      const filteredMsgObj = this.state.messages.filter(
+        x => x.message_id !== data
       );
       this.setState({ messages: filteredMsgObj });
     });
