@@ -5,11 +5,13 @@ export default function ChatInput(props) {
 
   const [currentlyBroadcasting, toggleBroadcast] = useState(false);
   const [broadcastID, changeBroadcastID] = useState(Math.random());
+  const [messageTime, updateMessageTime] = useState(null);
   // Object { message_id: 9, content: "testing", post_time: "2022-06-08T05:03:39.427Z", user_id: 3, room_id: 1, edited: false, username: "aaaaah" }
 
   const handleFocus = e => {
     if (!currentlyBroadcasting) {
       toggleBroadcast(true);
+      updateMessageTime(new Date());
       const rttMessage = {
         content: '',
         user_id: props.user.userID,
@@ -33,7 +35,7 @@ export default function ChatInput(props) {
         room_id: props.roomID,
         username: props.user.username,
         message_id: broadcastID,
-        post_time: new Date()
+        post_time: messageTime
       };
       socket.emit('rtt update', rttMessage);
     }
@@ -71,7 +73,8 @@ export default function ChatInput(props) {
       body: JSON.stringify({
         room: roomID,
         userID: user.userId,
-        message: e.target.elements[0].value
+        message: e.target.elements[0].value,
+        posttime: messageTime
       })
     }).then(res => res.json())
       .then(data => {

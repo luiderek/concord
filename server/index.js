@@ -137,16 +137,26 @@ app.get('/api/msg/:roomID', (req, res, next) => {
 });
 
 app.post('/api/msg/', (req, res, next) => {
-  const { userID, message, room } = req.body;
+  const { userID, message, room, posttime } = req.body;
   if (!message) { throw new ClientError(400, 'message required field'); }
   if (!userID) { throw new ClientError(400, 'userID required field'); }
   if (!room) { throw new ClientError(400, 'room required field'); }
-  const sql = `
+  let sql, params;
+  if (!posttime) {
+    sql = `
     insert into "messages" ("content", "user_id", "room_id")
     values ($1, $2, $3)
     returning *;
-  `;
-  const params = [message, userID, room];
+    `;
+    params = [message, userID, room];
+  } else {
+    sql = `
+      insert into "messages" ("content", "user_id", "room_id", "post_time")
+      values ($1, $2, $3, $4)
+      returning *;
+    `;
+    params = [message, userID, room, posttime];
+  }
   db.query(sql, params)
     .then(data => {
       res.status(201).json({ ...data.rows[0], username: req.user.username });
