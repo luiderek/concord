@@ -30,12 +30,12 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.socket.on('message submit', incomingMsg => {
-      // ATM messages will only be appended if the room state matches.
-      // But it should be better to handle this from the serverside.
-      // I think serverside should broadcast to servers,
-      // Clientside should filter it by rooms.
       if (incomingMsg.room_id === this.state.roomID) {
-        const newMsgObj = [...this.state.messages, incomingMsg];
+        let newMsgObj = [...this.state.messages, incomingMsg];
+        // Hope this isn't too computationally demanding?
+        // might be an interim solution, as I'm likely replacing this whole function
+        // with some sort of 'rtt submit' that just changes the state of any message already there.
+        newMsgObj = newMsgObj.sort((a, b) => new Date(a.post_time) - new Date(b.post_time));
         this.setState({ messages: newMsgObj });
       }
     });
