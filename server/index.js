@@ -15,16 +15,28 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 io.on('connection', socket => {
 
-  socket.on('message submit', content => {
-    io.emit('message submit', content);
+  socket.on('message submit', data => {
+    io.emit('message submit', data);
   });
 
-  socket.on('message edit', content => {
-    io.emit('message edit', content);
+  socket.on('message edit', data => {
+    io.emit('message edit', data);
   });
 
-  socket.on('message delete', target => {
-    io.emit('message delete', target);
+  socket.on('message delete', data => {
+    io.emit('message delete', data);
+  });
+
+  socket.on('rtt open', data => {
+    io.emit('rtt open', data);
+  });
+
+  socket.on('rtt update', data => {
+    io.emit('rtt update', data);
+  });
+
+  socket.on('rtt close', data => {
+    io.emit('rtt close', data);
   });
 
   socket.on('new room', data => {
