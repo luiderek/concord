@@ -59,9 +59,11 @@ export default class App extends React.Component {
     });
 
     this.socket.on('new room', incomingRoom => {
-      const { room_id, room_name } = incomingRoom;
-      const newRooms = [...this.state.rooms, { room_id, room_name }];
-      this.setState({ rooms: newRooms });
+      if (incomingRoom.room_id === this.state.roomID) {
+        const { room_id, room_name } = incomingRoom;
+        const newRooms = [...this.state.rooms, { room_id, room_name }];
+        this.setState({ rooms: newRooms });
+      }
     });
 
     const token = window.localStorage.getItem('react-context-jwt');
@@ -159,13 +161,11 @@ export default class App extends React.Component {
           const hash = window.location.hash.slice(2).split('/')[1];
           const currentRoom = rooms.find(x => x.room_name === hash);
           if (currentRoom) {
-            // this.loadPastMessages(currentRoom.room_id, token);
-            // I no longer need to call loadPastMessages because
-            // updateHashRoute triggers hashChange, which does do that.
             this.setState({
               roomID: currentRoom.room_id,
               roomName: currentRoom.room_name
             });
+            this.loadPastMessages(currentRoom.room_id, token);
             this.updateHashRoute(serverName, currentRoom.room_name);
           } else {
             // If the hash is invalid, just redirect to and load the first room.
@@ -173,6 +173,7 @@ export default class App extends React.Component {
               roomID: rooms[0].room_id,
               roomName: rooms[0].room_name
             });
+            this.loadPastMessages(rooms[0].room_id, token);
             this.updateHashRoute(serverName, rooms[0].room_name);
           }
         })
