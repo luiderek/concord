@@ -29,13 +29,17 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.socket.on('message submit', incomingMsg => {
-      if (incomingMsg.room_id === this.state.roomID) {
-        let newMsgObj = [...this.state.messages, incomingMsg];
-        // Hope this isn't too computationally demanding?
-        // might be an interim solution, as I'm likely replacing this whole function
-        // with some sort of 'rtt submit' that just changes the state of any message already there.
-        newMsgObj = newMsgObj.sort((a, b) => new Date(a.post_time) - new Date(b.post_time));
+    this.socket.on('rtt submit', data => {
+      if (data.room_id === this.state.roomID) {
+        const index = this.state.messages.findIndex(
+          x => x.message_id === data.ID
+        );
+        const newMsgObj = [...this.state.messages];
+        // By changing the message_id,
+        // this dodges any subsequent update / delete calls
+        if (newMsgObj && index !== -1) {
+          newMsgObj[index].message_id = data.newID;
+        }
         this.setState({ messages: newMsgObj });
       }
     });
@@ -45,7 +49,6 @@ export default class App extends React.Component {
         const newMsgObj = [...this.state.messages, data];
         this.setState({ messages: newMsgObj });
       }
-      // console.log('rtt open data:', data);
     });
 
     this.socket.on('message edit', editMsg => {
@@ -60,13 +63,14 @@ export default class App extends React.Component {
     });
 
     this.socket.on('rtt update', data => {
-      // console.log('rtt update data', data);
       if (data.room_id === this.state.roomID) {
         const index = this.state.messages.findIndex(
           x => x.message_id === data.message_id
         );
         const newMsgObj = [...this.state.messages];
-        newMsgObj[index] = data;
+        if (newMsgObj) {
+          newMsgObj[index] = data;
+        }
         this.setState({ messages: newMsgObj });
       }
     });
@@ -79,7 +83,6 @@ export default class App extends React.Component {
     });
 
     this.socket.on('rtt close', data => {
-      // console.log('rtt close', data);
       const filteredMsgObj = this.state.messages.filter(
         x => x.message_id !== data
       );

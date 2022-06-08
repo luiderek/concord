@@ -39,6 +39,10 @@ io.on('connection', socket => {
     io.emit('rtt close', data);
   });
 
+  socket.on('rtt submit', data => {
+    io.emit('rtt submit', data);
+  });
+
   socket.on('new room', data => {
     io.emit('new room', data);
   });

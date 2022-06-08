@@ -55,11 +55,6 @@ export default function ChatInput(props) {
     e.preventDefault();
     const { user, roomID } = props;
 
-    e.target[0].blur();
-    toggleBroadcast(false);
-    socket.emit('rtt close', broadcastID);
-    changeBroadcastID(Math.random());
-
     if (e.target.elements[0].value === '') {
       return;
     }
@@ -78,10 +73,15 @@ export default function ChatInput(props) {
       })
     }).then(res => res.json())
       .then(data => {
-        socket.emit('message submit', data);
-        e.target.reset(); // Clear form.
+        socket.emit('rtt submit', { ID: broadcastID, newID: data.message_id, room_id: data.room_id });
+        e.target.reset();
       })
-      .catch(err => console.error(err));
+      .catch(err => console.error(err))
+      .finally(() => {
+        toggleBroadcast(false);
+        changeBroadcastID(Math.random());
+        e.target[0].blur();
+      });
   };
 
   return (
