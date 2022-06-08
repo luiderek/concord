@@ -41,6 +41,20 @@ form {
   grid-column: 3;
 }
 
+.message span.live-typed {
+  color: var(--bs-gray-500);
+}
+
+@keyframes color-fade-in {
+  0% { color: var(--bs-gray-500); }
+  100% { color: var(--bs-gray-200); }
+}
+
+.message span.fade-in {
+  animation-name: color-fade-in;
+  animation-duration: 1.25s;
+}
+
 /* I was having problems with flex justify breaking the scrollbar if the
    content was larger than the container, so this is my workaround. */
 

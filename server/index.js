@@ -15,10 +15,6 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 io.on('connection', socket => {
 
-  socket.on('message submit', data => {
-    io.emit('message submit', data);
-  });
-
   socket.on('message edit', data => {
     io.emit('message edit', data);
   });

@@ -18,7 +18,8 @@ export default function ChatInput(props) {
         room_id: props.roomID,
         username: props.user.username,
         message_id: broadcastID,
-        post_time: new Date()
+        post_time: new Date(),
+        isLiveType: true
       };
       // as far as I can see, the problems about using a random number is when the key itself is Math.random.
       // my goal is for it to not overlap, and it shouldn't change if I only change the key after closing a message.
@@ -35,7 +36,8 @@ export default function ChatInput(props) {
         room_id: props.roomID,
         username: props.user.username,
         message_id: broadcastID,
-        post_time: messageTime
+        post_time: messageTime,
+        isLiveType: true
       };
       socket.emit('rtt update', rttMessage);
     }
@@ -73,7 +75,7 @@ export default function ChatInput(props) {
       })
     }).then(res => res.json())
       .then(data => {
-        socket.emit('rtt submit', { ID: broadcastID, newID: data.message_id, room_id: data.room_id });
+        socket.emit('rtt submit', { ID: broadcastID, newID: data.message_id, room_id: data.room_id, isLiveType: false });
         e.target.reset();
       })
       .catch(err => console.error(err))

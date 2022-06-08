@@ -39,6 +39,7 @@ export default class App extends React.Component {
         // this dodges any subsequent update / delete calls
         if (newMsgObj && index !== -1) {
           newMsgObj[index].message_id = data.newID;
+          newMsgObj[index].isLiveType = 'finished';
         }
         this.setState({ messages: newMsgObj });
       }

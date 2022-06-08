@@ -16,11 +16,18 @@ export default function Message(props) {
           <span>{props.time}</span>
           <span>{props.name}</span>
           {!isEditedMsg && (
-            <span>
+            <span className={`${
+                props.isLiveType
+                  ? props.isLiveType === 'finished'
+                      ? 'fade-in'
+                      : 'live-typed'
+                  : ''
+            }`
+              }>
               {props.content}
               {/* The edited-marker needs to be on it's own span for copy-paste.
-          Turns out, user-select:none also prevents span bleed.
-          Might be a useful trick in the future for this stuff. */}
+                Turns out, user-select:none also prevents span bleed.
+                Might be a useful trick in the future for this stuff. */}
               {props.edited === true && (
                 <span className="edited-marker">(edited)</span>
               )}
