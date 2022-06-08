@@ -33,7 +33,7 @@ export default function CreateRoomModal(props) {
           console.error('error:', data);
         } else {
           // {room_id: 10, room_name: 'something', server_id: 1}
-          socket.emit('new room', data);
+          socket.emit('create room', data);
         }
       })
       .catch(err => console.error(err));

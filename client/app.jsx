@@ -29,13 +29,25 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.socket.on('message submit', incomingMsg => {
-      // ATM messages will only be appended if the room state matches.
-      // But it should be better to handle this from the serverside.
-      // I think serverside should broadcast to servers,
-      // Clientside should filter it by rooms.
-      if (incomingMsg.room_id === this.state.roomID) {
-        const newMsgObj = [...this.state.messages, incomingMsg];
+    this.socket.on('rtt submit', data => {
+      if (data.room_id === this.state.roomID) {
+        const index = this.state.messages.findIndex(
+          x => x.message_id === data.ID
+        );
+        const newMsgObj = [...this.state.messages];
+        // By changing the message_id,
+        // this dodges any subsequent update / delete calls
+        if (newMsgObj && index !== -1) {
+          newMsgObj[index].message_id = data.newID;
+          newMsgObj[index].isLiveType = 'finished';
+        }
+        this.setState({ messages: newMsgObj });
+      }
+    });
+
+    this.socket.on('rtt open', data => {
+      if (data.room_id === this.state.roomID) {
+        const newMsgObj = [...this.state.messages, data];
         this.setState({ messages: newMsgObj });
       }
     });
@@ -51,6 +63,19 @@ export default class App extends React.Component {
       }
     });
 
+    this.socket.on('rtt update', data => {
+      if (data.room_id === this.state.roomID) {
+        const index = this.state.messages.findIndex(
+          x => x.message_id === data.message_id
+        );
+        const newMsgObj = [...this.state.messages];
+        if (newMsgObj) {
+          newMsgObj[index] = data;
+        }
+        this.setState({ messages: newMsgObj });
+      }
+    });
+
     this.socket.on('message delete', incomingTarget => {
       const filteredMsgObj = this.state.messages.filter(
         x => x.message_id !== incomingTarget.message_id
@@ -58,10 +83,19 @@ export default class App extends React.Component {
       this.setState({ messages: filteredMsgObj });
     });
 
-    this.socket.on('new room', incomingRoom => {
-      const { room_id, room_name } = incomingRoom;
-      const newRooms = [...this.state.rooms, { room_id, room_name }];
-      this.setState({ rooms: newRooms });
+    this.socket.on('rtt close', data => {
+      const filteredMsgObj = this.state.messages.filter(
+        x => x.message_id !== data
+      );
+      this.setState({ messages: filteredMsgObj });
+    });
+
+    this.socket.on('create room', incomingRoom => {
+      if (incomingRoom.server_id === this.state.serverID) {
+        const { room_id, room_name } = incomingRoom;
+        const newRooms = [...this.state.rooms, { room_id, room_name }];
+        this.setState({ rooms: newRooms });
+      }
     });
 
     const token = window.localStorage.getItem('react-context-jwt');
@@ -159,13 +193,11 @@ export default class App extends React.Component {
           const hash = window.location.hash.slice(2).split('/')[1];
           const currentRoom = rooms.find(x => x.room_name === hash);
           if (currentRoom) {
-            // this.loadPastMessages(currentRoom.room_id, token);
-            // I no longer need to call loadPastMessages because
-            // updateHashRoute triggers hashChange, which does do that.
             this.setState({
               roomID: currentRoom.room_id,
               roomName: currentRoom.room_name
             });
+            this.loadPastMessages(currentRoom.room_id, token);
             this.updateHashRoute(serverName, currentRoom.room_name);
           } else {
             // If the hash is invalid, just redirect to and load the first room.
@@ -173,6 +205,7 @@ export default class App extends React.Component {
               roomID: rooms[0].room_id,
               roomName: rooms[0].room_name
             });
+            this.loadPastMessages(rooms[0].room_id, token);
             this.updateHashRoute(serverName, rooms[0].room_name);
           }
         })

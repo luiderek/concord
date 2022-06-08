@@ -20,6 +20,7 @@ export default function MessageContainer(props) {
               edited={msg.edited}
               sameUser={msg.username === context.user.username}
               currentlyEditing={currentlyEditing}
+              isLiveType={msg.isLiveType}
               setEditing={setEditing} />
           ));
         }

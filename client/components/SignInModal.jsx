@@ -53,12 +53,12 @@ export default function SignInModal(props) {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Username</Form.Label>
-              <Form.Control type="text" />
+              <Form.Control className='dark-input' type="text" />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" />
+              <Form.Control className='dark-input' type="password" />
             </Form.Group>
 
           </Modal.Body>

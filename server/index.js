@@ -15,20 +15,32 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 io.on('connection', socket => {
 
-  socket.on('message submit', content => {
-    io.emit('message submit', content);
+  socket.on('message edit', data => {
+    io.emit('message edit', data);
   });
 
-  socket.on('message edit', content => {
-    io.emit('message edit', content);
+  socket.on('message delete', data => {
+    io.emit('message delete', data);
   });
 
-  socket.on('message delete', target => {
-    io.emit('message delete', target);
+  socket.on('rtt open', data => {
+    io.emit('rtt open', data);
   });
 
-  socket.on('new room', data => {
-    io.emit('new room', data);
+  socket.on('rtt update', data => {
+    io.emit('rtt update', data);
+  });
+
+  socket.on('rtt close', data => {
+    io.emit('rtt close', data);
+  });
+
+  socket.on('rtt submit', data => {
+    io.emit('rtt submit', data);
+  });
+
+  socket.on('create room', data => {
+    io.emit('create room', data);
   });
 });
 
@@ -125,16 +137,26 @@ app.get('/api/msg/:roomID', (req, res, next) => {
 });
 
 app.post('/api/msg/', (req, res, next) => {
-  const { userID, message, room } = req.body;
+  const { userID, message, room, posttime } = req.body;
   if (!message) { throw new ClientError(400, 'message required field'); }
   if (!userID) { throw new ClientError(400, 'userID required field'); }
   if (!room) { throw new ClientError(400, 'room required field'); }
-  const sql = `
+  let sql, params;
+  if (!posttime) {
+    sql = `
     insert into "messages" ("content", "user_id", "room_id")
     values ($1, $2, $3)
     returning *;
-  `;
-  const params = [message, userID, room];
+    `;
+    params = [message, userID, room];
+  } else {
+    sql = `
+      insert into "messages" ("content", "user_id", "room_id", "post_time")
+      values ($1, $2, $3, $4)
+      returning *;
+    `;
+    params = [message, userID, room, posttime];
+  }
   db.query(sql, params)
     .then(data => {
       res.status(201).json({ ...data.rows[0], username: req.user.username });

@@ -73,12 +73,12 @@ export default function SignUpModal(props) {
 
             <Form.Group className="mb-3" controlId="formUser">
               <Form.Label>Username</Form.Label>
-              <Form.Control type="text" maxLength="12" />
+              <Form.Control className='dark-input' type="text" maxLength="12" />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formPass">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" />
+              <Form.Control className='dark-input' type="password" />
             </Form.Group>
 
           </Modal.Body>
