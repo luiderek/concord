@@ -35,7 +35,7 @@ form {
 }
 
 .message span {
-  display: inline-table;
+  display: inline;
   margin-right: 0.5rem;
   color: var(--bs-gray-100);
   grid-column: 3;
@@ -242,8 +242,8 @@ div.fade,
   color: var(--bs-gray-300);
   font-size: 80%;
   grid-column: 1;
-  display: inline-block;
   margin-top: 0.1rem;
+  display: inline-table;
 }
 
 .message > span > span:nth-child(2) {
@@ -251,6 +251,7 @@ div.fade,
   font-size: 95%;
   grid-column: 2;
   justify-content: center;
+  display: inline-table;
 }
 
 .all-unset {
