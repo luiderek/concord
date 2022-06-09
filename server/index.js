@@ -273,6 +273,12 @@ app.post('/api/servers/', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.use((req, res) => {
+  res.sendFile('/index.html', {
+    root: path.join(__dirname, 'public')
+  });
+});
+
 app.use(errorMiddleware);
 
 // replaced app.listen with server.listen now that socket.io is here.
