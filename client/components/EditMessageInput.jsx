@@ -9,6 +9,13 @@ export default function EditMessageInput(props) {
     formSetter(e.target.value);
   };
 
+  const handleKeyDown = e => {
+    // if escape pressed
+    if (e.keyCode === 27) {
+      closeEditing();
+    }
+  };
+
   const closeEditing = () => {
     props.setEditing(null);
   };
@@ -39,7 +46,9 @@ export default function EditMessageInput(props) {
           className='chat-input edit-input'
           type='text'
           value={`${formValue}`}
-          onChange={handleInputChange}>
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          >
         </input>
       </form>
       <div className='edit-message-guide-text'>

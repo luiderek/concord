@@ -34,7 +34,7 @@ export default function Message(props) {
             </span>
           )}
         </span>
-        {props.sameUser && !isEditedMsg && (
+        {props.sameUser && !isEditedMsg && props.isLiveType !== true && (
           <span className="icon-wrapper">
             <i
               className="fa-solid fa-pencil"

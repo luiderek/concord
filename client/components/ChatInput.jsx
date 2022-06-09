@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import socket from '../lib/socket-instance';
 
 export default function ChatInput(props) {
@@ -7,6 +7,24 @@ export default function ChatInput(props) {
   const [broadcastID, changeBroadcastID] = useState(Math.random());
   const [messageTime, updateMessageTime] = useState(null);
   // Object { message_id: 9, content: "testing", post_time: "2022-06-08T05:03:39.427Z", user_id: 3, room_id: 1, edited: false, username: "aaaaah" }
+
+  const textInput = useRef(null);
+
+  useEffect(() => {
+    const listener = event => {
+      if ((event.code === 'Enter' || event.code === 'NumpadEnter') &&
+           !event.target.className.includes('chat-input')) {
+        event.preventDefault();
+        textInput.current.focus();
+      }
+
+    };
+
+    document.addEventListener('keydown', listener);
+    return () => {
+      document.removeEventListener('keydown', listener);
+    };
+  }, []);
 
   const handleFocus = e => {
     if (!currentlyBroadcasting) {
@@ -58,6 +76,8 @@ export default function ChatInput(props) {
     const { user, roomID } = props;
 
     if (e.target.elements[0].value === '') {
+      textInput.current.blur();
+      handleBlur(e);
       return;
     }
 
@@ -93,6 +113,7 @@ export default function ChatInput(props) {
         onFocus={handleFocus}
         onChange={handleChange}
         onBlur={handleBlur}
+        ref={textInput}
         placeholder={`Message #${props.roomName}`}>
       </input>
     </form>
