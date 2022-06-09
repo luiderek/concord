@@ -35,7 +35,7 @@ form {
 }
 
 .message span {
-  display: inline-table;
+  display: inline;
   margin-right: 0.5rem;
   color: var(--bs-gray-100);
   grid-column: 3;
@@ -241,16 +241,21 @@ div.fade,
 .message > span > span:nth-child(1) {
   color: var(--bs-gray-300);
   font-size: 80%;
-  grid-column: 1;
-  display: inline-block;
   margin-top: 0.1rem;
+  width: max-content;
+  display: inline-block;
 }
 
 .message > span > span:nth-child(2) {
   font-weight: bold;
   font-size: 95%;
-  grid-column: 2;
-  justify-content: center;
+  display: inline-table;
+  margin-right: -3.6rem;
+}
+
+.message > span > span:nth-child(3) {
+  box-decoration-break: clone;
+  padding-left: 4.1rem;
 }
 
 .all-unset {
@@ -331,6 +336,7 @@ div.fade,
   padding-block: 0.2rem;
   color: #b9bdc2;
   background-color: #2f3136;
+  cursor: pointer;
 }
 
 .room-sidebar div:first-of-type {
