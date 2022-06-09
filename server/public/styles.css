@@ -331,6 +331,7 @@ div.fade,
   padding-block: 0.2rem;
   color: #b9bdc2;
   background-color: #2f3136;
+  cursor: pointer;
 }
 
 .room-sidebar div:first-of-type {
