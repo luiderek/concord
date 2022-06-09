@@ -254,6 +254,9 @@ div.fade,
 }
 
 .message > span > span:nth-child(3) {
+  display: inline;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   padding-left: 4.1rem;
 }
