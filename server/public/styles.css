@@ -129,6 +129,7 @@ div.message .icon-wrapper {
   grid-column: 4;
   color: var(--pencilColor);
   margin-block: auto;
+  cursor: pointer;
 }
 
 .fa-trash-can {
