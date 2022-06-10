@@ -10,13 +10,13 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sidebarShow: true
+      sidebarShow: false
     };
   }
 
   componentDidMount() {
-    if (window.innerWidth < 500) {
-      this.setState({ sidebarShow: false });
+    if (window.innerWidth > 500) {
+      this.setState({ sidebarShow: true });
     }
   }
 
