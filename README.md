@@ -9,14 +9,14 @@ A text chat-room clone of discord.
                ┌─ RoomSidebar ─┼─ CreateRoom
      ┌── Home ─┤               │
      │         │               └─ Room
-App ─┤         │
+     │         │
      │         ├─ MessageContainer ─► Message
-     │         │                      │
+    App        │                      │
      │         └─ Chat Input          ├─ DeleteModal
      │                                │
      │                                └─ EditMsgInput
      │         ┌─ SignUp
      └─  Auth ─┤
                └─ SignIn
-               
+ 
 Component relationship chart (As of 6/10/22)
