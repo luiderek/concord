@@ -495,7 +495,7 @@ span > span.edited-marker:first-child {
 .swipe-selector {
   position: absolute;
   left: 250px;
-  width: 45%;
+  width: 100%;
   height: 20%;
   z-index: 1;
   opacity: 0;
