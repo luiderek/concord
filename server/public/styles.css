@@ -54,8 +54,13 @@ form {
 }
 
 @keyframes color-fade-in {
-  0% { color: var(--bs-gray-500); }
-  100% { color: var(--bs-gray-200); }
+  0% {
+    color: var(--bs-gray-500);
+  }
+
+  100% {
+    color: var(--bs-gray-200);
+  }
 }
 
 .message span.fade-in {
@@ -79,7 +84,7 @@ div.message {
   display: flex;
   justify-content: space-between;
   padding-left: 2.75%;
-  padding-right: 12%;
+  padding-right: 2.75%;
 }
 
 div.message * {
@@ -109,7 +114,6 @@ div.message .icon-wrapper {
 } */
 
 .chat-input {
-  width: 85%;
   padding: 0.4rem 4rem;
   background-color: #40444b;
   color: var(--bs-gray-200);
@@ -117,6 +121,8 @@ div.message .icon-wrapper {
   border-radius: 8px;
   margin-left: 2.75%;
   margin-top: 0.2rem;
+  width: 92.5%;
+  margin-right: 2.75%;
 }
 
 .chat-input:focus {
@@ -195,6 +201,10 @@ div.message .icon-wrapper {
 div.fade,
 .modal-dialog-centered {
   background: none;
+  transition: none;
+
+  /* Hopefully ^ fixes a bug where the .fade modal of react-bootstrap
+     wasn't removing itself in time, and makes the page unusable.  */
 }
 
 .modal-backdrop.show {
@@ -473,4 +483,29 @@ span > span.edited-marker:first-child {
 .float-sidebar {
   float: left;
   height: 100%;
+  transition-duration: 1.2s;
+  transition-timing-function: ease-in-out;
+}
+
+.hide-sidebar-left {
+  transform: translateX(-250px);
+  margin-right: -250px;
+}
+
+.swipe-selector {
+  position: absolute;
+  left: 250px;
+  width: 45%;
+  height: 20%;
+  z-index: 1;
+  opacity: 0;
+}
+
+.swipe-selector-active {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  z-index: 1;
+  opacity: 0;
 }

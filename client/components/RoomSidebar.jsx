@@ -6,7 +6,7 @@ import ChangeServerModal from './ChangeServerModal';
 
 export default function RoomSidebar(props) {
   return (
-    <div className="float-sidebar">
+    <div className={`float-sidebar ${!props.isShow && 'hide-sidebar-left'}`}>
       <div className="room-sidebar">
         <ChangeServerModal
           serverName={props.serverName}
