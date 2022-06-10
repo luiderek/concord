@@ -6,7 +6,7 @@ import ChangeServerModal from './ChangeServerModal';
 
 export default function RoomSidebar(props) {
   return (
-    <>
+    <div className="float-sidebar">
       <div className="room-sidebar">
         <ChangeServerModal
           serverName={props.serverName}
@@ -21,11 +21,11 @@ export default function RoomSidebar(props) {
             isActive={msg.room_name === props.roomName}
           />
         ))}
+        <div className="user-sign-out">
+          <span>{props.user.username}</span>
+          <Button onClick={props.handleSignOut}>sign out</Button>
+        </div>
       </div>
-      <div className="user-sign-out">
-        <span>{props.user.username}</span>
-        <Button onClick={props.handleSignOut}>sign out</Button>
-      </div>
-    </>
+    </div>
   );
 }

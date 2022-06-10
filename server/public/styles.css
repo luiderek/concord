@@ -9,9 +9,17 @@ form {
   border-radius: 5px;
 }
 
+.layout-container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: 1fr 50px;
+  overflow: hidden;
+  height: 100%;
+}
+
 .message-container {
   width: 100%;
-  height: calc(100% - 1rem);
+  height: 100%;
   margin-inline: auto;
   overflow-y: hidden;
   margin-top: auto;
@@ -72,12 +80,6 @@ div.message {
   justify-content: space-between;
   padding-left: 2.75%;
   padding-right: 12%;
-
-  /* display: grid; */
-
-  /* grid-template-columns: 70px 60px 1fr 20px 25px; */
-
-  /* grid-auto-flow: row dense; */
 }
 
 div.message * {
@@ -102,9 +104,9 @@ div.message .icon-wrapper {
   align-self: baseline;
 }
 
-.layout-container > form:nth-child(3) {
+/* .layout-container > form:nth-child(3) {
   grid-column: 2;
-}
+} */
 
 .chat-input {
   width: 85%;
@@ -126,7 +128,6 @@ div.message .icon-wrapper {
 }
 
 .fa-pencil {
-  grid-column: 4;
   color: var(--pencilColor);
   margin-block: auto;
   cursor: pointer;
@@ -297,10 +298,9 @@ div.fade,
 }
 
 .user-sign-out {
-  grid-column: 1;
-  grid-row: 2;
   width: 100%;
-  height: 100%;
+  margin-top: auto;
+  height: 40px;
   background-color: #292b2f;
   color: white;
   display: flex;
@@ -326,9 +326,12 @@ div.fade,
 
 .room-sidebar {
   height: 100%;
+  min-width: 250px;
   background-color: #2f3136;
   overflow-y: auto;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .room-sidebar div {
@@ -348,6 +351,10 @@ div.fade,
   margin-inline: unset;
   font-weight: bold;
   color: #fff;
+}
+
+.room-sidebar div:last-of-type {
+  margin-top: auto;
 }
 
 .room-sidebar div:hover {
@@ -461,4 +468,9 @@ span > span.edited-marker:first-child {
 .edit-highlight + form {
   background-color: #32353b;
   border-radius: 0;
+}
+
+.float-sidebar {
+  float: left;
+  height: 100%;
 }

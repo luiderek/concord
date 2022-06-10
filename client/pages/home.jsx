@@ -6,14 +6,25 @@ import RoomSidebar from '../components/RoomSidebar';
 import ChatInput from '../components/ChatInput';
 
 export default class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      leftSidebarActive: false
+    };
+  }
+
   render() {
     if (!this.context.user) return <Redirect to="auth" />;
 
     return (
       <>
-        <RoomSidebar serverName="default" {...this.context}/>
-        <MessageContainer />
-        <ChatInput {...this.context} />
+        { this.state.leftSidebarActive &&
+          <RoomSidebar serverName="default" {...this.context} />
+        }
+        <div className="layout-container">
+          <MessageContainer />
+          <ChatInput {...this.context} />
+        </div>
       </>
     );
   }
