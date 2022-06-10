@@ -272,7 +272,7 @@ export default class App extends React.Component {
       return <Auth />;
     }
     if (pathValid) {
-      return <Home path={path} />;
+      return <Home />;
     }
     return <NotFound />;
   }
@@ -307,11 +307,7 @@ export default class App extends React.Component {
     return (
       <AppContext.Provider value={contextValue}>
         <>
-          <div
-            className={route.path === 'auth' ? 'container' : 'layout-container'}
-          >
-            {this.renderPage()}
-          </div>
+          {this.renderPage()}
         </>
       </AppContext.Provider>
     );

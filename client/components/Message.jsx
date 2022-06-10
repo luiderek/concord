@@ -7,15 +7,15 @@ export default function Message(props) {
     props.setEditing(props.msgID);
   }
 
-  const isEditedMsg = props.currentlyEditing === props.msgID;
+  const isEditing = props.currentlyEditing === props.msgID;
 
   return (
     <>
-      <div className={`message ${isEditedMsg ? 'edit-highlight' : ''}`}>
+      <div className={`message ${isEditing ? 'edit-highlight' : ''}`}>
         <span>
           <span>{props.time}</span>
           <span>{props.name}</span>
-          {!isEditedMsg && (
+          {!isEditing && (
             <span className={`${
                 props.isLiveType
                   ? props.isLiveType === 'finished'
@@ -25,16 +25,13 @@ export default function Message(props) {
             }`
               }>
               {props.content}
-              {/* The edited-marker needs to be on it's own span for copy-paste.
-                Turns out, user-select:none also prevents span bleed.
-                Might be a useful trick in the future for this stuff. */}
               {props.edited === true && (
                 <span className="edited-marker">(edited)</span>
               )}
             </span>
           )}
         </span>
-        {props.sameUser && !isEditedMsg && props.isLiveType !== true && (
+        {props.sameUser && !isEditing && props.isLiveType !== true && (
           <span className="icon-wrapper">
             <i
               className="fa-solid fa-pencil"
@@ -44,7 +41,7 @@ export default function Message(props) {
           </span>
         )}
       </div>
-      {isEditedMsg && <EditMessageInput {...props} />}
+      {isEditing && <EditMessageInput {...props} />}
     </>
   );
 }
