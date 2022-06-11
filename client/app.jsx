@@ -35,8 +35,7 @@ export default class App extends React.Component {
           x => x.message_id === data.ID
         );
         const newMsgObj = [...this.state.messages];
-        // By changing the message_id,
-        // this dodges any subsequent update / delete calls
+        // changing the message_id dodges any subsequent update / delete calls
         if (newMsgObj && index !== -1) {
           newMsgObj[index].message_id = data.newID;
           newMsgObj[index].isLiveType = 'finished';
@@ -200,7 +199,7 @@ export default class App extends React.Component {
             this.loadPastMessages(currentRoom.room_id, token);
             this.updateHashRoute(serverName, currentRoom.room_name);
           } else {
-            // If the hash is invalid, just redirect to and load the first room.
+            // If hash is invalid, just redirect to and load the first room.
             this.setState({
               roomID: rooms[0].room_id,
               roomName: rooms[0].room_name
@@ -213,9 +212,6 @@ export default class App extends React.Component {
     }
   }
 
-  // Perhaps sign-in needs to be going to a "which room" modal at the start?"
-  // ATM it just tries to throw you into 'default, 1'.
-  // This code might need some trimming / reworking.
   handleSignIn(result) {
     const { user, token } = result;
     window.localStorage.setItem('react-context-jwt', token);

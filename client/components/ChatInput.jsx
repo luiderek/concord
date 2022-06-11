@@ -6,7 +6,6 @@ export default function ChatInput(props) {
   const [currentlyBroadcasting, toggleBroadcast] = useState(false);
   const [broadcastID, changeBroadcastID] = useState(Math.random());
   const [messageTime, updateMessageTime] = useState(null);
-  // Object { message_id: 9, content: "testing", post_time: "2022-06-08T05:03:39.427Z", user_id: 3, room_id: 1, edited: false, username: "aaaaah" }
 
   const textInput = useRef(null);
 
@@ -39,8 +38,6 @@ export default function ChatInput(props) {
         post_time: new Date(),
         isLiveType: true
       };
-      // as far as I can see, the problems about using a random number is when the key itself is Math.random.
-      // my goal is for it to not overlap, and it shouldn't change if I only change the key after closing a message.
       socket.emit('rtt open', rttMessage);
     }
 
