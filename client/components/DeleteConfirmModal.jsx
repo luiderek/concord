@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import socket from '../lib/socket-instance';
-// This is non optimal but I want things up and running first.
 
 export default function DeleteConfirmModal(props) {
   const [show, setShow] = useState(false);

@@ -3,8 +3,6 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
-// This is non optimal but I want things up and running first.
-
 export default function SignUpModal(props) {
   const [show, setShow] = useState(false);
 
@@ -14,15 +12,10 @@ export default function SignUpModal(props) {
   const handleSubmit = e => {
     e.preventDefault();
     setShow(false);
-    // form user
-    // console.log('user', e.target.form.elements[0].value);
-    // form pass
-    // console.log('pass', e.target.form.elements[1].value);
     const authobject = {
       username: e.target.form.elements[0].value,
       password: e.target.form.elements[1].value
     };
-    // console.log(authobject);
     fetch('/api/auth/sign-up', {
       method: 'POST',
       headers: {
@@ -51,8 +44,6 @@ export default function SignUpModal(props) {
             })
             .catch(err => console.error(err));
         }
-        // console.log('successfully created account', data);
-        // location.reload(); // Refresh page. I know its terrible but it's funny.
       })
       .catch(err => console.error(err));
   };

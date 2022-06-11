@@ -30,7 +30,6 @@ export default function ChangeServerModal(props) {
         if (data.error) {
           console.error('error:', data);
         } else {
-          // data = []{serv_name: , server_id:}
           setServerList(data);
         }
       })
