@@ -2,8 +2,9 @@
 
 A full stack JavaScript solo project using Express, Node, PostgreSQL, React.
 
-A text chat-room clone of discord, featuring real time text, the ability to create rooms and servers, and CRUD operations to a database which typically wouldn't be in an actual chat app, but this is still primarily intended as a demo project.
+You can check it out live [here](chat-concord.herokuapp.com/)!
 
+This is just a chat-room discord clone, featuring real time text, the ability to create rooms and servers, and CRUD operations to a database.
 
                                ┌─ CreateServer
                                │
