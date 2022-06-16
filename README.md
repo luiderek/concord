@@ -1,4 +1,4 @@
-# Concord • [Live Demo](chat-concord.herokuapp.com/)
+# Concord • [Live Demo](https://chat-concord.herokuapp.com/)
 
 A full stack JavaScript solo project using Express, Node, PostgreSQL, and React. A webapp for people who want to chat with others.
 
