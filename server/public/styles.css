@@ -25,7 +25,6 @@ form {
   margin-top: auto;
 }
 
-/* Weird little workaround needed for a quirk of react-scroll-to-bottom */
 .message-container > div {
   display: flex;
   flex-direction: column;
@@ -33,7 +32,6 @@ form {
   overflow-y: scroll;
 }
 
-/* Another byproduct of react-scroll-to-bottom, a button I don't want. */
 .message-container > button {
   display: none;
 }
@@ -195,9 +193,6 @@ div.fade,
 .modal-dialog-centered {
   background: none;
   transition: none;
-
-  /* Hopefully ^ fixes a bug where the .fade modal of react-bootstrap
-     wasn't removing itself in time, and makes the page unusable.  */
 }
 
 .modal-backdrop.show {
