@@ -1,9 +1,9 @@
 import React from 'react';
-import MessageContainer from '../components/MessageContainer';
+import MessageContainer from '../components/message-container';
 import AppContext from '../lib/app-context';
 import Redirect from '../components/redirect';
-import RoomSidebar from '../components/RoomSidebar';
-import ChatInput from '../components/ChatInput';
+import RoomSidebar from '../components/room-sidebar';
+import ChatInput from '../components/chat-input';
 import { Swipe } from 'react-swipe-component';
 
 export default class Home extends React.Component {
