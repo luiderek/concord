@@ -1,6 +1,8 @@
 # Concord • [Live Demo](https://chat-concord.herokuapp.com/)
 
-A full stack JavaScript solo project using Express, Node, PostgreSQL, and React. A webapp for people who want to chat with others.
+A full stack JavaScript solo project using Express, Node, PostgreSQL, and React. 
+
+A webapp for people who want to chat with others. It's just a chatroom with servers and rooms.
 
 I have good memories of talking to people through google docs, and a chatroom implementation of real-time-text copying discord's styling seemed like a fun project to practice replicating designs, as well as working with sockets and manipulating a relational database. 
 
