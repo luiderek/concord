@@ -1,8 +1,8 @@
 import React from 'react';
-import Room from './Room';
+import Room from './room';
 import Button from 'react-bootstrap/Button';
-import CreateRoomModal from './CreateRoomModal';
-import ChangeServerModal from './ChangeServerModal';
+import CreateRoomModal from './create-room-modal';
+import ChangeServerModal from './change-server-modal';
 
 export default function RoomSidebar(props) {
   return (

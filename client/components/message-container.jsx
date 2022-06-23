@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Message from './Message';
+import Message from './message';
 import AppContext from '../lib/app-context';
 import ScrollToBottom from 'react-scroll-to-bottom';
 

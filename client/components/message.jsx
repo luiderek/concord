@@ -1,6 +1,6 @@
 import React from 'react';
-import DeleteConfirmModal from './DeleteConfirmModal';
-import EditMessageInput from './EditMessageInput';
+import DeleteConfirmModal from './delete-message-modal';
+import EditMessageInput from './edit-message-input';
 
 export default function Message(props) {
   function updateCurrentlyEditing(e) {

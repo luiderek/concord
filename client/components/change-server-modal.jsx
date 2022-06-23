@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import { Typeahead } from 'react-bootstrap-typeahead';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
+// import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 export default function ChangeServerModal(props) {
   const [show, setShow] = useState(false);

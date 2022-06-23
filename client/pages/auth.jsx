@@ -1,6 +1,6 @@
 import React from 'react';
-import SignUpModal from '../components/SignUpModal';
-import SignInModal from '../components/SignInModal';
+import SignUpModal from '../components/sign-up-modal';
+import SignInModal from '../components/sign-in-modal';
 import AppContext from '../lib/app-context';
 import Redirect from '../components/redirect';
 
